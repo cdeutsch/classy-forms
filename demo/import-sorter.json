@@ -1,0 +1,35 @@
+{
+  "generalConfiguration": {
+    "exclude": ["EXAMPLE-FILE.tsx"],
+    "sortOnBeforeSave": true
+  },
+  "importStringConfiguration": {
+    "trailingComma": "multiLine",
+    "tabSize": 2,
+    "maximumNumberOfImportExpressionsPerLine": {
+      "count": 120,
+      "type": "newLineEachExpressionAfterCountLimit"
+    }
+  },
+  "sortConfiguration": {
+    "removeUnusedImports": false,
+    "customOrderingRules": {
+      "rules": [{
+          "type": "importMember",
+          "regex": "^$",
+          "orderLevel": 10,
+          "disableSort": true
+        },
+        {
+          "regex": "^$",
+          "orderLevel": 20
+        },
+        {
+          "regex": "^[.]",
+          "orderLevel": 30
+        }
+      ]
+    }
+  }
+}
+

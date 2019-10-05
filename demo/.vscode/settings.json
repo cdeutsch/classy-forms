@@ -16,8 +16,7 @@
     // your workspace
     "static": true, // static is generated output so ignore
     "dist": true,
-    ".cache-loader": true,
-    "demo": true, // this is its own project and it's recommended to open in a separate editor
+    ".cache-loader": true
   },
   "[javascript]": {
     "editor.formatOnSave": true
@@ -67,7 +66,6 @@
     "tsconfig.json"
   ],
   "cSpell.words": [
-    "Serializers",
-    "polyfill"
+    "passthrough"
   ],
 }
