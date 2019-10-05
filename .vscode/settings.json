@@ -66,5 +66,7 @@
     "tsconfig.json"
   ],
   "cSpell.words": [
+    "Serializers",
+    "polyfill"
   ],
 }
