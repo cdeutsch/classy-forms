@@ -27,7 +27,7 @@
     "prepare-release": "run-s reset version"
   },
   "scripts-info": {
-    "info": "Display information about the package scripts",
+    "describe": "Display information about the package scripts",
     "build": "Clean and rebuild the project",
     "fix": "Try to automatically fix any linting problems",
     "lint": "Lint the project",
