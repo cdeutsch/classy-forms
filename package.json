@@ -75,5 +75,10 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "standard-version": {
+    "scripts": {
+      "postchangelog": "code --wait CHANGELOG.md"
+    }
   }
 }
