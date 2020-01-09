@@ -12,3 +12,10 @@ build/docs
 coverage
 .nyc_output
 *.log
+.editorconfig
+.nvmrc
+.prettierrc
+demo
+import-sorter.json
+jest.config.js
+
