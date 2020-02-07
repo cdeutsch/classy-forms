@@ -75,17 +75,17 @@ export interface FormFieldWithHelpers extends FormField {
   onBlur(event: React.FocusEvent<HTMLInputElement>): void;
 }
 
-export type FormFields<T extends string = string> = Record<T, FormField>;
+export type FormFields<T extends object = any> = Record<Extract<keyof T, string>, FormField>;
 
-export type FormFieldsWithHelpers<T extends string = string> = Record<T, FormFieldWithHelpers>;
+export type FormFieldsWithHelpers<T extends object = any> = Record<Extract<keyof T, string>, FormFieldWithHelpers>;
 
-export interface FormsProviderProps<T extends string = string> {
+export interface FormsProviderProps<T extends object = any> {
   formFieldConfigs: FormFieldConfig[];
   initFormFields?: FormFields<T>;
   onSubmit?(event: React.FormEvent<HTMLFormElement>): void;
 }
 
-export interface FormsContextContext<T extends string = string> {
+export interface FormsContextContext<T extends object = any> {
   formFields: FormFieldsWithHelpers<T>;
 
   onSubmit(event: React.FormEvent<HTMLFormElement>): void;

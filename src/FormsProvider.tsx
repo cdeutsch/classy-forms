@@ -119,7 +119,7 @@ export function createFormField(formFieldConfig: FormFieldConfig): FormField {
   };
 }
 
-export function createFormFields<T extends string>(formFieldConfigs: FormFieldConfig[]): FormFields<T> {
+export function createFormFields<T extends object = any>(formFieldConfigs: FormFieldConfig[]): FormFields<T> {
   // Convert FormFieldConfig to FormField class instance.
   const formFields: FormFields = {};
 
