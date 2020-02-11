@@ -94,7 +94,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     if (validationResult.allValid) {
       // Call custom onSubmit.
       if (this.props.onSubmit) {
-        this.props.onSubmit(event);
+        this.props.onSubmit(event, formFields);
       }
     } else {
       // Prevent <form> from submitting.
