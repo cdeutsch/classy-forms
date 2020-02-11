@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { Button } from '@material-ui/core';
-import { ClassyForms, Form, FormField, FormFieldConfig, FormsContextContext } from 'classy-forms';
+import { ClassyForm, FormField, FormFieldConfig, FormsContextContext } from 'classy-forms';
 import React from 'react';
 
 import { FormInput } from '../components/FormInput';
@@ -10,10 +10,16 @@ import { Page } from '../components/Page';
 interface UserFormFields {
   firstName: string;
   lastName: string;
+  email: string;
 }
 
-function getRequiredHelperText(formField: FormField, submitting?: boolean) {
-  return formField.hasError && !formField.value ? 'Required' : '';
+function getErrorText(formField: FormField, submitting?: boolean) {
+  switch (formField.errors[0]) {
+    case 'required':
+      return 'Required';
+    case 'isEmail':
+      return 'Invalid email';
+  }
 }
 
 const formFieldConfigs: FormFieldConfig[] = [
@@ -21,13 +27,20 @@ const formFieldConfigs: FormFieldConfig[] = [
     name: 'lastName',
     label: 'Last name',
     required: true,
-    getHelperText: getRequiredHelperText,
+    getHelperText: getErrorText,
   },
   {
     name: 'firstName',
     label: 'First name',
     required: true,
-    getHelperText: getRequiredHelperText,
+    getHelperText: getErrorText,
+  },
+  {
+    name: 'email',
+    label: 'Email',
+    required: true,
+    isEmail: true,
+    getHelperText: getErrorText,
   },
 ];
 
@@ -35,23 +48,25 @@ export class Home extends React.Component {
   render() {
     return (
       <Page>
-        <ClassyForms formFieldConfigs={formFieldConfigs}>
-          {({ formFields: { firstName, lastName }, onSubmit }: FormsContextContext<UserFormFields>) => {
+        <ClassyForm formFieldConfigs={formFieldConfigs}>
+          {({ formFields: { email, firstName, lastName }, onSubmit }: FormsContextContext<UserFormFields>) => {
             return (
-              <Form acceptCharset="UTF-8" action="/" id="voteForm" method="post" noValidate>
+              <React.Fragment>
                 <FormInput key={firstName.name} formField={firstName} />
 
                 <FormInput key={lastName.name} formField={lastName} />
+
+                <FormInput key={email.name} formField={email} />
 
                 <div className="form-actions">
                   <Button variant="contained" color="primary" type="submit">
                     Register
                   </Button>
                 </div>
-              </Form>
+              </React.Fragment>
             );
           }}
-        </ClassyForms>
+        </ClassyForm>
       </Page>
     );
   }

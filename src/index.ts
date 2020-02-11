@@ -1,4 +1,5 @@
-export * from './ClassyForms';
+export * from './ClassyForm';
+export * from './ClassyFormsSetup';
 export * from './Form';
 export * from './FormsProvider';
 export * from './interfaces';

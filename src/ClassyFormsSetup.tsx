@@ -3,11 +3,11 @@ import React from 'react';
 import { FormsConsumer, FormsProvider } from './FormsProvider';
 import { FormsContextContext, FormsProviderProps } from './interfaces';
 
-export interface ClassyFormsProps<P = {}> extends FormsProviderProps {
+export interface ClassyFormsSetupProps<P = {}> extends FormsProviderProps {
   children(props: FormsContextContext): React.ReactElement | null;
 }
 
-export class ClassyForms extends React.Component<ClassyFormsProps> {
+export class ClassyFormsSetup extends React.Component<ClassyFormsSetupProps> {
   render() {
     const { children, ...passthrough } = this.props;
 
