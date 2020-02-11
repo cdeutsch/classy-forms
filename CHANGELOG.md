@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/cdeutsch/classy-forms/compare/v0.0.4...v0.0.5) (2020-02-11)
+
+Upgraded NPMs in Demo and main project devDependencies. Otherwise should be the same as v0.0.4.
+
+
 ### [0.0.4](https://github.com/cdeutsch/classy-forms/compare/v0.0.3...v0.0.4) (2020-02-11)
 
 Fix typings on `getHelperText` and `getLabel`
