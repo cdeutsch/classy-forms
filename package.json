@@ -30,9 +30,7 @@
     "fix": "Try to automatically fix any linting problems",
     "lint": "Lint the project",
     "watch": "Watch and rebuild the project on save",
-    "version": "Bump package.json version, update CHANGELOG.md, tag release",
-    "reset": "Delete all un-tracked files and reset the repo to the last commit",
-    "prepare-release": "One-step: clean, build, and prep a release"
+    "version": "Bump package.json version, update CHANGELOG.md, tag release"
   },
   "engines": {
     "node": ">=8.9"
