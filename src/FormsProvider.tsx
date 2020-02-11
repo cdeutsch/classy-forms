@@ -16,6 +16,8 @@ export const FormsContext = React.createContext<FormsContextContext>({
   formFields: {},
   // tslint:disable-next-line: no-empty
   onSubmit: () => {},
+  // tslint:disable-next-line: no-empty
+  reset: () => {},
 });
 
 export const FormsConsumer = FormsContext.Consumer;
@@ -43,6 +45,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     this.state = {
       formFields: formFieldsWithHelpers,
       onSubmit: this.onSubmit,
+      reset: this.reset,
     };
   }
 
@@ -100,6 +103,20 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
       // Prevent <form> from submitting.
       event.preventDefault();
     }
+  };
+
+  reset = () => {
+    // Reset form fields to their original state.
+    const { formFields } = this.state;
+
+    Object.keys(formFields).forEach((name) => {
+      const formField = formFields[name];
+
+      formField.dirty = false;
+      formField.errors = [];
+      formField.hasError = false;
+      formField.value = '';
+    });
   };
 }
 

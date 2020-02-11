@@ -88,6 +88,7 @@ export interface FormsContextContext<T extends object = any> {
   formFields: FormFieldsWithHelpers<T>;
 
   onSubmit(event: React.FormEvent<HTMLFormElement>): void;
+  reset(): void;
 }
 
 export interface ValidationResult {
