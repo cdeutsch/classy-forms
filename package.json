@@ -19,6 +19,7 @@
     "lint": "run-s lint:*",
     "lint:ts": "tslint --project tsconfig.json --force --format stylish",
     "lint:prettier": "prettier \"src/**/*.ts?\" --list-different",
+    "release": "run-s build && run-s version",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\"",
     "version": "standard-version",
     "test": "NODE_ENV=test jest",
@@ -29,6 +30,7 @@
     "build": "Clean and rebuild the project",
     "fix": "Try to automatically fix any linting problems",
     "lint": "Lint the project",
+    "release": "Build and version the project",
     "watch": "Watch and rebuild the project on save",
     "version": "Bump package.json version, update CHANGELOG.md, tag release"
   },
