@@ -253,18 +253,12 @@ function validateAndDetectChanges(
     formField.helperText = formFieldConfig.getHelperText(formField, submitting);
   }
 
-  const origLabel = formField.label;
-  if (formFieldConfig.getLabel) {
-    formField.label = formFieldConfig.getLabel(formField, submitting);
-  }
-
   // Detect if we changed any fields.
   // If so, we need to call setState.
   return (
     valid !== wasValid ||
     origDirty !== formField.dirty ||
     origHelperText !== formField.helperText ||
-    origLabel !== formField.label ||
     !arraysEqual(origErrors, formField.errors)
   );
 }
