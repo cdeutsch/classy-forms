@@ -55,8 +55,8 @@ export interface FormFieldConfig {
   minLength?: number;
 
   isValid?(formField: FormField, formFields: FormFields, submitting?: boolean): boolean;
-  getHelperText?(formField: FormField, submitting?: boolean): string;
-  getLabel?(formField: FormField, submitting?: boolean): string;
+  getHelperText?(formField: FormField, submitting?: boolean): string | undefined;
+  getLabel?(formField: FormField, submitting?: boolean): string | undefined;
 }
 
 export interface FormField {
