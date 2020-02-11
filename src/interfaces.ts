@@ -82,7 +82,7 @@ export type FormFieldsWithHelpers<T extends object = any> = Record<Extract<keyof
 export interface FormsProviderProps<T extends object = any> {
   formFieldConfigs: FormFieldConfig[];
   initFormFields?: FormFields<T>;
-  onSubmit?(event: React.FormEvent<HTMLFormElement>): void;
+  onSubmit?(event: React.FormEvent<HTMLFormElement>, formFields: FormFieldsWithHelpers<T>): void;
 }
 
 export interface FormsContextContext<T extends object = any> {

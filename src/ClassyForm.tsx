@@ -4,7 +4,9 @@ import { Form } from './Form';
 import { FormsConsumer, FormsProvider } from './FormsProvider';
 import { FormsContextContext, FormsProviderProps } from './interfaces';
 
-export interface ClassyFormProps<P = {}> extends React.FormHTMLAttributes<HTMLFormElement>, FormsProviderProps {
+export interface ClassyFormProps<P = {}>
+  extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'>,
+    FormsProviderProps {
   children(props: FormsContextContext): React.ReactElement | null;
 }
 
