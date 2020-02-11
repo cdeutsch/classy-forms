@@ -236,6 +236,13 @@ function validateAndDetectChanges(
   const errors = isValid(formField, formFields, formFieldConfig, submitting);
   const valid = errors.length === 0;
   formField.hasError = !valid;
+  // Always mark dirty once we have an error (usually this means the form was submitted)
+  // Might have to rethink this if it causes problems, but currently if you try submit a form right away,
+  //   then click in a required field and click out, the error clears onBlur which is a bit weird.
+  const origDirty = formField.dirty;
+  if (formField.hasError) {
+    formField.dirty = true;
+  }
 
   const origErrors = formField.errors;
   // Sort the error values for faster comparison later.
@@ -255,6 +262,7 @@ function validateAndDetectChanges(
   // If so, we need to call setState.
   return (
     valid !== wasValid ||
+    origDirty !== formField.dirty ||
     origHelperText !== formField.helperText ||
     origLabel !== formField.label ||
     !arraysEqual(origErrors, formField.errors)
