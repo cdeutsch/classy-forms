@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/cdeutsch/classy-forms/compare/v0.0.10...v0.0.11) (2020-02-12)
+
+Added `validateOnChange` form field config option.
+
+
 ### [0.0.10](https://github.com/cdeutsch/classy-forms/compare/v0.0.9...v0.0.10) (2020-02-12)
 
 Added `onChangeValue` helper, so frameworks that use a non-native `<select>` don't have to create a fake `event`.
