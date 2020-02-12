@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/cdeutsch/classy-forms/compare/v0.0.9...v0.0.10) (2020-02-12)
+
+Added `onChangeValue` helper, so frameworks that use a non-native `<select>` don't have to create a fake `event`.
+
+
 ### [0.0.9](https://github.com/cdeutsch/classy-forms/compare/v0.0.8...v0.0.9) (2020-02-12)
 
 Support `HTMLSelectElement` and `HTMLTextAreaElement` in `onChange` and `onBlur`.
