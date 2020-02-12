@@ -63,8 +63,9 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
       formField.value = value;
       formField.dirty = true;
 
-      // Validate immediately only if there are errors.
-      if (formField.hasError) {
+      // Validate immediately only if there are errors or validateOnChange is true.
+      const formFieldConfig = getFormFieldConfig(name, this.props.formFieldConfigs);
+      if (formField.hasError || formFieldConfig.validateOnChange) {
         validateFormFields(formFields, this.props.formFieldConfigs, false, name);
       }
 
