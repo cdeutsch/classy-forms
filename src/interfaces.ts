@@ -28,6 +28,7 @@ export interface FormFieldConfig {
   name: string;
   value?: Value;
   label?: string;
+  validateOnChange?: boolean;
   // error?: boolean;
   // dirty?: boolean;
 
