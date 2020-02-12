@@ -53,7 +53,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     return <FormsContext.Provider value={this.state}>{this.props.children}</FormsContext.Provider>;
   }
 
-  onChange = (name: string, event: React.ChangeEvent<HTMLInputElement>) => {
+  onChange = (name: string, event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { formFields } = this.state;
     const formField = formFields[name];
 
@@ -72,7 +72,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     }
   };
 
-  onBlur = (name: string, event: React.FocusEvent<HTMLInputElement>) => {
+  onBlur = (name: string, event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { formFields } = this.state;
 
     const validationResult = validateFormFields(formFields, this.props.formFieldConfigs, false, name);
