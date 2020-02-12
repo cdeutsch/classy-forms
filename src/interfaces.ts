@@ -71,7 +71,8 @@ export interface FormField {
 
 export interface FormFieldWithHelpers extends FormField {
   onChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void;
-  onBlur(event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void;
+  onBlur(): void;
+  onChangeValue(value: Value): void;
 }
 
 export type FormFields<T extends object = any> = Record<Extract<keyof T, string>, FormField>;

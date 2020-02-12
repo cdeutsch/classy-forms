@@ -9,6 +9,7 @@ import {
   FormsContextContext,
   FormsProviderProps,
   ValidationResult,
+  Value,
 } from './interfaces';
 import { validations } from './validations';
 
@@ -39,6 +40,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
         ...formField,
         onChange: this.onChange.bind(this, key),
         onBlur: this.onBlur.bind(this, key),
+        onChangeValue: this.onChangeValue.bind(this, key),
       };
     });
 
@@ -53,12 +55,12 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     return <FormsContext.Provider value={this.state}>{this.props.children}</FormsContext.Provider>;
   }
 
-  onChange = (name: string, event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  onChangeValue = (name: string, value: Value) => {
     const { formFields } = this.state;
     const formField = formFields[name];
 
-    if (formField && formField.value !== event.target.value) {
-      formField.value = event.target.value;
+    if (formField && formField.value !== value) {
+      formField.value = value;
       formField.dirty = true;
 
       // Validate immediately only if there are errors.
@@ -72,7 +74,11 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     }
   };
 
-  onBlur = (name: string, event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  onChange = (name: string, event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    this.onChangeValue(name, event.target.value);
+  };
+
+  onBlur = (name: string) => {
     const { formFields } = this.state;
 
     const validationResult = validateFormFields(formFields, this.props.formFieldConfigs, false, name);
