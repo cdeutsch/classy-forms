@@ -118,11 +118,16 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
 
     Object.keys(formFields).forEach((name) => {
       const formField = formFields[name];
+      const formFieldConfig = getFormFieldConfig(name, this.props.formFieldConfigs);
 
       formField.dirty = false;
       formField.errors = [];
       formField.hasError = false;
-      formField.value = '';
+      formField.value = formFieldConfig.value || '';
+    });
+
+    this.setState({
+      formFields: formFields,
     });
   };
 }
