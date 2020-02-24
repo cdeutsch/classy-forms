@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12](https://github.com/cdeutsch/classy-forms/compare/v0.0.11...v0.0.12) (2020-02-24)
+
+Fix the reset functionality.
+
+We should be resetting it to the initial value, and `setState` needs to be called.
+
+
 ### [0.0.11](https://github.com/cdeutsch/classy-forms/compare/v0.0.10...v0.0.11) (2020-02-12)
 
 Added `validateOnChange` form field config option.
