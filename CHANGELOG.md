@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/cdeutsch/classy-forms/compare/v0.0.12...v0.0.13) (2020-02-26)
+
+Add `invalidText` and `helperText` config options.
+
+`invalidText` allows you to set the helper text displayed on error. Overridden by getHelperText if both exist.
+
+`helperText` allows you to set the helper text always displayed, but is overridden by invalidText when invalid, and getHelperText if both exist.
+
+
 ### [0.0.12](https://github.com/cdeutsch/classy-forms/compare/v0.0.11...v0.0.12) (2020-02-24)
 
 Fix the reset functionality.

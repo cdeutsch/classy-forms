@@ -278,6 +278,10 @@ function validateAndDetectChanges(
   formField.errors = errors.sort();
 
   const origHelperText = formField.helperText;
+  formField.helperText = formFieldConfig.helperText;
+  if (formField.hasError && formFieldConfig.invalidText) {
+    formField.helperText = formFieldConfig.invalidText;
+  }
   if (formFieldConfig.getHelperText) {
     formField.helperText = formFieldConfig.getHelperText(formField, submitting);
   }
