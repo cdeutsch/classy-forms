@@ -29,6 +29,8 @@ export interface FormFieldConfig {
   value?: Value;
   label?: string;
   validateOnChange?: boolean;
+  helperText?: string; // Helper text to display. Overridden by invalidText when invalid, and getHelperText if both exist.
+  invalidText?: string; // Helper text displayed on error. Overridden by getHelperText if both exist.
   // error?: boolean;
   // dirty?: boolean;
 
