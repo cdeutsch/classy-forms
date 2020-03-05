@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/cdeutsch/classy-forms/compare/v0.1.1...v0.1.2) (2020-03-05)
+
+Remove optional chaining and nullish coalescing operator because TypeScript targeting `esnext` won't transpile them, and a lot of Webpack configs aren't ready to handle them 🙄
+
+
 ### [0.1.1](https://github.com/cdeutsch/classy-forms/compare/v0.1.0...v0.1.1) (2020-03-05)
 
 Upgrade NPMs, particularly TypeScript to fix the library breaking bug due to using new features that don't exist in the previous version.
