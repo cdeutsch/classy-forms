@@ -31,6 +31,10 @@ export interface FormOptions {
    * Mode to use when calculating `dirty`. Default is `NotEqual`.
    */
   dirtyMode?: DirtyMode;
+  /**
+   * Function to use to compare equality. Used to calculate `dirty`.
+   */
+  isEqual?(valueA: Value, valueB: Value): boolean;
 }
 
 export interface FormFieldConfig {

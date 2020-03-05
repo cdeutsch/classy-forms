@@ -74,7 +74,11 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
       if (options?.dirtyMode === 'OnChange') {
         formField.dirty = true;
       } else {
-        formField.dirty = defaultInitValue(formFieldConfig) !== formField.value;
+        if (options?.isEqual) {
+          formField.dirty = options.isEqual(defaultInitValue(formFieldConfig), formField.value);
+        } else {
+          formField.dirty = defaultInitValue(formFieldConfig) !== formField.value;
+        }
       }
 
       // Validate immediately only if there are errors or validateOnChange is true.
