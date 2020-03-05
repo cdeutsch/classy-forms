@@ -71,10 +71,10 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
       formField.value = value;
 
       // Calculate `dirty` based on `dirtyMode`.
-      if (options?.dirtyMode === 'OnChange') {
+      if (options && options.dirtyMode === 'OnChange') {
         formField.dirty = true;
       } else {
-        if (options?.isEqual) {
+        if (options && options.isEqual) {
           formField.dirty = options.isEqual(defaultInitValue(formFieldConfig), formField.value);
         } else {
           formField.dirty = defaultInitValue(formFieldConfig) !== formField.value;
@@ -321,7 +321,8 @@ function validateAndDetectChanges(
 }
 
 export function defaultInitValue(formFieldConfig: FormFieldConfig): Value {
-  return formFieldConfig.initValue ?? '';
+  // return formFieldConfig.initValue ?? '';
+  return formFieldConfig.initValue == null ? '' : formFieldConfig.initValue;
 }
 
 export function getFormFieldConfig(name: string, formFieldConfigs: FormFieldConfig[]): FormFieldConfig {
