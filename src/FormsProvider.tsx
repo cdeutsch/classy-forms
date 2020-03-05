@@ -149,10 +149,10 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
   };
 
   isDirty = () => {
-    // Reset form fields to their original state.
     const { formFields } = this.state;
 
-    return Object.keys(formFields).every((name) => !formFields[name].dirty);
+    // The Form is consider `dirty` if any Field is `dirty`.
+    return Object.keys(formFields).some((name) => formFields[name].dirty);
   };
 }
 
