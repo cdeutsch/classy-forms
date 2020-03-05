@@ -19,7 +19,7 @@
     "lint": "run-s lint:*",
     "lint:ts": "tslint --project tsconfig.json --force --format stylish",
     "lint:prettier": "prettier \"src/**/*.ts?\" --list-different",
-    "release": "run-s build && run-s version",
+    "release": "run-s build && standard-version",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\"",
     "version": "standard-version",
     "test": "NODE_ENV=test jest",
