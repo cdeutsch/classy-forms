@@ -27,7 +27,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
   constructor(props: FormsProviderProps) {
     super(props);
 
-    // Create formFields or using initial.
+    // Create formFields or use initial.
     const formFields = props.initFormFields || createFormFields(props.formFieldConfigs);
 
     // Augment FormFields with events (helpers).
@@ -123,7 +123,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
       formField.dirty = false;
       formField.errors = [];
       formField.hasError = false;
-      formField.value = formFieldConfig.value || '';
+      formField.value = formFieldConfig.initValue || '';
     });
 
     this.setState({
@@ -136,7 +136,7 @@ export function createFormField(formFieldConfig: FormFieldConfig): FormField {
   // Convert formFieldConfigs to formField.
   return {
     name: formFieldConfig.name,
-    value: formFieldConfig.value || '',
+    value: formFieldConfig.initValue || '',
     // TODO: decide if setting the init value for hasError, etc is necessary.
     // hasError: formFieldConfig.hasError || false,
     // errors: formFieldConfig.errors || false,

@@ -26,7 +26,7 @@ export type ErrorType =
 
 export interface FormFieldConfig {
   name: string;
-  value?: Value;
+  initValue?: Value;
   label?: string;
   validateOnChange?: boolean;
   helperText?: string; // Helper text to display. Overridden by invalidText when invalid, and getHelperText if both exist.
