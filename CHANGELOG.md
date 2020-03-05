@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/cdeutsch/classy-forms/compare/v0.1.0...v0.1.1) (2020-03-05)
+
+Upgrade NPMs, particularly TypeScript to fix the library breaking bug due to using new features that don't exist in the previous version.
+
+
 ### [0.1.0](https://github.com/cdeutsch/classy-forms/compare/v0.0.13...v0.1.0) (2020-03-05)
 
 Add two ways to calculate `dirty`.
