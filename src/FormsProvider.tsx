@@ -19,6 +19,10 @@ export const FormsContext = React.createContext<FormsContextContext>({
   onSubmit: () => {},
   // tslint:disable-next-line: no-empty
   reset: () => {},
+  // tslint:disable-next-line: no-empty
+  isDirty: () => {
+    return false;
+  },
 });
 
 export const FormsConsumer = FormsContext.Consumer;
@@ -27,7 +31,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
   constructor(props: FormsProviderProps) {
     super(props);
 
-    // Create formFields or using initial.
+    // Create formFields or use initial.
     const formFields = props.initFormFields || createFormFields(props.formFieldConfigs);
 
     // Augment FormFields with events (helpers).
@@ -48,6 +52,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
       formFields: formFieldsWithHelpers,
       onSubmit: this.onSubmit,
       reset: this.reset,
+      isDirty: this.isDirty,
     };
   }
 
@@ -57,16 +62,28 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
 
   onChangeValue = (name: string, value: Value) => {
     const { formFields } = this.state;
+    const { formFieldConfigs, options } = this.props;
     const formField = formFields[name];
 
     if (formField && formField.value !== value) {
+      const formFieldConfig = getFormFieldConfig(name, formFieldConfigs);
+
       formField.value = value;
-      formField.dirty = true;
+
+      // Calculate `dirty` based on `dirtyMode`.
+      if (options?.dirtyMode === 'OnChange') {
+        formField.dirty = true;
+      } else {
+        if (options?.isEqual) {
+          formField.dirty = options.isEqual(defaultInitValue(formFieldConfig), formField.value);
+        } else {
+          formField.dirty = defaultInitValue(formFieldConfig) !== formField.value;
+        }
+      }
 
       // Validate immediately only if there are errors or validateOnChange is true.
-      const formFieldConfig = getFormFieldConfig(name, this.props.formFieldConfigs);
       if (formField.hasError || formFieldConfig.validateOnChange) {
-        validateFormFields(formFields, this.props.formFieldConfigs, false, name);
+        validateFormFields(formFields, formFieldConfigs, false, name);
       }
 
       this.setState({
@@ -123,12 +140,19 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
       formField.dirty = false;
       formField.errors = [];
       formField.hasError = false;
-      formField.value = formFieldConfig.value || '';
+      formField.value = defaultInitValue(formFieldConfig);
     });
 
     this.setState({
       formFields: formFields,
     });
+  };
+
+  isDirty = () => {
+    // Reset form fields to their original state.
+    const { formFields } = this.state;
+
+    return Object.keys(formFields).every((name) => !formFields[name].dirty);
   };
 }
 
@@ -136,7 +160,7 @@ export function createFormField(formFieldConfig: FormFieldConfig): FormField {
   // Convert formFieldConfigs to formField.
   return {
     name: formFieldConfig.name,
-    value: formFieldConfig.value || '',
+    value: defaultInitValue(formFieldConfig),
     // TODO: decide if setting the init value for hasError, etc is necessary.
     // hasError: formFieldConfig.hasError || false,
     // errors: formFieldConfig.errors || false,
@@ -294,6 +318,10 @@ function validateAndDetectChanges(
     origHelperText !== formField.helperText ||
     !arraysEqual(origErrors, formField.errors)
   );
+}
+
+export function defaultInitValue(formFieldConfig: FormFieldConfig): Value {
+  return formFieldConfig.initValue ?? '';
 }
 
 export function getFormFieldConfig(name: string, formFieldConfigs: FormFieldConfig[]): FormFieldConfig {

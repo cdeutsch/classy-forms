@@ -24,9 +24,22 @@ export type ErrorType =
   | 'required'
   | 'isValid';
 
+export type DirtyMode = 'NotEqual' | 'OnChange';
+
+export interface FormOptions {
+  /**
+   * Mode to use when calculating `dirty`. Default is `NotEqual`.
+   */
+  dirtyMode?: DirtyMode;
+  /**
+   * Function to use to compare equality. Used to calculate `dirty`.
+   */
+  isEqual?(valueA: Value, valueB: Value): boolean;
+}
+
 export interface FormFieldConfig {
   name: string;
-  value?: Value;
+  initValue?: Value;
   label?: string;
   validateOnChange?: boolean;
   helperText?: string; // Helper text to display. Overridden by invalidText when invalid, and getHelperText if both exist.
@@ -85,6 +98,7 @@ export type FormFieldsWithHelpers<T extends object = any> = Record<Extract<keyof
 export interface FormsProviderProps<T extends object = any> {
   formFieldConfigs: FormFieldConfig[];
   initFormFields?: FormFields<T>;
+  options?: FormOptions;
   onSubmit?(event: React.FormEvent<HTMLFormElement>, formFields: FormFieldsWithHelpers<T>): void;
 }
 
@@ -93,6 +107,7 @@ export interface FormsContextContext<T extends object = any> {
 
   onSubmit(event: React.FormEvent<HTMLFormElement>): void;
   reset(): void;
+  isDirty(): boolean;
 }
 
 export interface ValidationResult {

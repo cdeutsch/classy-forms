@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.0](https://github.com/cdeutsch/classy-forms/compare/v0.0.13...v0.0.14) (2020-03-05)
+
+Add two ways to calculate `dirty`.
+
+`OnChange` will immediately be dirty and stay dirty as soon as the value changes.
+
+`NotEqual` will only be dirty if the value is differently than the defaulted `initValue`, and can change over time.
+
+Add `defaultInitValue` because we're using this logic in 3 places now and I can see it changing in the future, since we may not want to default all null values to a string.
+
+Add `isEqual` option so you can do a "deep equal" to set the `dirty` flag if desired.
+
+BREAKING CHANGE:
+
+Rename `formFieldConfig.value` to `formFieldConfig.initValue` to better clarify what it does.
+
+As `value` it implies if you change it later it will do something, when in reality it does not.
+
+
 ### [0.0.13](https://github.com/cdeutsch/classy-forms/compare/v0.0.12...v0.0.13) (2020-02-26)
 
 Add `invalidText` and `helperText` config options.
