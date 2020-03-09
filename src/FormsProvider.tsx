@@ -65,7 +65,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     const { formFieldConfigs, options } = this.props;
     const formField = formFields[name];
 
-    if (formField && formField.value !== value) {
+    if (formField) {
       const formFieldConfig = getFormFieldConfig(name, formFieldConfigs);
 
       formField.value = value;

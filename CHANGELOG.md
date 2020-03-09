@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/cdeutsch/classy-forms/compare/v0.1.3...v0.1.4) (2020-03-09)
+
+Always run the onChange logic.
+
+Our "not equal" check was blocking the rest of the logic.
+
+
 ### [0.1.3](https://github.com/cdeutsch/classy-forms/compare/v0.1.2...v0.1.3) (2020-03-05)
 
 Fix bug in `isDirty` logic.
