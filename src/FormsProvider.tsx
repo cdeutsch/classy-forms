@@ -368,3 +368,14 @@ export function validateFormFields(
     stateModified: stateModified,
   };
 }
+
+export function formFieldsToObject<T extends object = any>(formFields: FormFields<T>) {
+  return Object.keys(formFields).reduce<T>(
+    (accumulator, key) => ({
+      ...accumulator,
+      [key as Extract<keyof T, string>]: formFields[key as Extract<keyof T, string>].value,
+    }),
+    // tslint:disable-next-line: no-object-literal-type-assertion
+    {} as T
+  );
+}
