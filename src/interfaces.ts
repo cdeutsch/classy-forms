@@ -87,6 +87,7 @@ export interface FormField {
 
 export interface FormFieldWithHelpers extends FormField {
   onChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void;
+  onChangeChecked(event: React.ChangeEvent<HTMLInputElement>): void;
   onBlur(): void;
   onChangeValue(value: Value): void;
 }

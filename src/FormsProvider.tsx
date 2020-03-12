@@ -43,6 +43,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
       formFieldsWithHelpers[key] = {
         ...formField,
         onChange: this.onChange.bind(this, key),
+        onChangeChecked: this.onChangeChecked.bind(this, key),
         onBlur: this.onBlur.bind(this, key),
         onChangeValue: this.onChangeValue.bind(this, key),
       };
@@ -94,6 +95,10 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
 
   onChange = (name: string, event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     this.onChangeValue(name, event.target.value);
+  };
+
+  onChangeChecked = (name: string, event: React.ChangeEvent<HTMLInputElement>) => {
+    this.onChangeValue(name, event.target.checked);
   };
 
   onBlur = (name: string) => {
