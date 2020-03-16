@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/cdeutsch/classy-forms/compare/v0.1.8...v0.1.9) (2020-03-16)
+
+Remove `node_modules` and `package-lock.json` and re `npm i` to address security bulletins for the Demo project.
+
+
+### [0.1.8](https://github.com/cdeutsch/classy-forms/compare/v0.1.7...v0.1.8) (2020-03-16)
+
+Remove `node_modules` and `package-lock.json` and re `npm i` to address security bulletins.
+
+
 ### [0.1.7](https://github.com/cdeutsch/classy-forms/compare/v0.1.6...v0.1.7) (2020-03-16)
 
 Bump acorn from 6.4.0 to 6.4.1
