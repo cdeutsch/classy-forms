@@ -100,7 +100,12 @@ export interface FormsProviderProps<T extends object = any> {
   formFieldConfigs: FormFieldConfig[];
   initFormFields?: FormFields<T>;
   options?: FormOptions;
-  onSubmit?(event: React.FormEvent<HTMLFormElement>, formFields: FormFieldsWithHelpers<T>): void;
+  onSubmit?(
+    event: React.FormEvent<HTMLFormElement>,
+    formFields: FormFieldsWithHelpers<T>,
+    reset: () => void,
+    isDirty: () => boolean
+  ): void;
 }
 
 export interface FormsContextContext<T extends object = any> {

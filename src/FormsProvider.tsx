@@ -113,7 +113,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
   };
 
   onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const { formFields } = this.state;
+    const { formFields, isDirty, reset } = this.state;
 
     // Don't submit the form if there are errors.
     const validationResult = validateFormFields(formFields, this.props.formFieldConfigs, true);
@@ -126,7 +126,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     if (validationResult.allValid) {
       // Call custom onSubmit.
       if (this.props.onSubmit) {
-        this.props.onSubmit(event, formFields);
+        this.props.onSubmit(event, formFields, reset, isDirty);
       }
     } else {
       // Prevent <form> from submitting.
