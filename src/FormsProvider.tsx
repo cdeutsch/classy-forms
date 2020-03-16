@@ -76,7 +76,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
         formField.dirty = true;
       } else {
         if (options && options.isEqual) {
-          formField.dirty = options.isEqual(defaultInitValue(formFieldConfig), formField.value);
+          formField.dirty = !options.isEqual(defaultInitValue(formFieldConfig), formField.value);
         } else {
           formField.dirty = defaultInitValue(formFieldConfig) !== formField.value;
         }
