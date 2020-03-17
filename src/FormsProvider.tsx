@@ -33,8 +33,8 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
   constructor(props: FormsProviderProps) {
     super(props);
 
-    // Create formFields or use initial.
-    const formFields = props.initFormFields || initializeFormFields(props.formFieldConfigs);
+    // Initialize formFields.
+    const formFields = initializeFormFields(props.formFieldConfigs);
 
     // Augment FormFields with events (helpers).
     const formFieldsState: FormFieldsState = {};
@@ -218,6 +218,10 @@ function createFormFields<F extends FormField, T extends object = any>(
       required: formFieldConfig.required || false,
       label: formFieldConfig.label,
       // Merge Config/Props and State which will overwrite any existing value in formFieldState.
+      // The "controlled" config/prop always has precedence.
+      hasError: formFieldConfig.hasError || formField.hasError,
+      errors: formFieldConfig.errors || formField.errors,
+      dirty: formFieldConfig.dirty || formField.dirty,
       helperText: formFieldConfig.helperText || formField.helperText,
     };
   });
@@ -229,12 +233,10 @@ export function initializeFormField(formFieldConfig: FormFieldConfig): FormField
   // Convert formFieldConfigs to formField.
   return {
     value: defaultInitValue(formFieldConfig),
-    // TODO: decide if setting the init value for hasError, etc is necessary.
-    // hasError: formFieldConfig.hasError || false,
-    // errors: formFieldConfig.errors || false,
-    hasError: false,
-    errors: [],
-    dirty: false,
+    hasError: formFieldConfig.hasError || false,
+    errors: formFieldConfig.errors || [],
+    dirty: formFieldConfig.dirty || false,
+    helperText: formFieldConfig.helperText,
   };
 }
 
@@ -374,7 +376,6 @@ function validateAndDetectChanges(
   formField.errors = errors.sort();
 
   const origHelperText = formField.helperText;
-  formField.helperText = formFieldConfig.helperText;
   if (formField.hasError && formFieldConfig.invalidText) {
     formField.helperText = formFieldConfig.invalidText;
   }

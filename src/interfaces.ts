@@ -44,8 +44,11 @@ export interface FormFieldConfig {
   validateOnChange?: boolean;
   helperText?: string; // Helper text to display. Overridden by invalidText when invalid, and getHelperText if both exist.
   invalidText?: string; // Helper text displayed on error. Overridden by getHelperText if both exist.
-  // error?: boolean;
-  // dirty?: boolean;
+
+  // Extra props used to manually control the state.
+  hasError?: boolean;
+  errors?: ErrorType[];
+  dirty?: boolean;
 
   // Validations:
   required?: boolean;
@@ -115,7 +118,6 @@ export type FormFieldsWithEventHelpers<T extends object = any> = Record<
 export interface FormsProviderProps<T extends object = any> {
   formKey?: string | number;
   formFieldConfigs: FormFieldConfig[];
-  initFormFields?: FormFields<T>;
   options?: FormOptions;
   onSubmit?(
     event: React.FormEvent<HTMLFormElement>,
