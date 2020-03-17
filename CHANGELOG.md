@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/cdeutsch/classy-forms/compare/v0.2.0...v0.2.1) (2020-03-17)
+
+Create a separate `initializeFormFieldsServerSide` function instead of passing a `updateFormFieldConfigs`.
+
+This is because we also want to always run validation with the `submitting` flag set, AND return the results.
+
+Always validate on initialization so that initValues are taken into account.
+
+
 ## [0.2.0](https://github.com/cdeutsch/classy-forms/compare/v0.1.12...v0.2.0) (2020-03-17)
 
 Add `formKey` Provider property that can be used to reset the internal formFields state and re-run validation. Useful after making an async call to update the database and you want to reset the dirty flags, etc.

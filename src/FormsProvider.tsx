@@ -36,6 +36,9 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
     // Initialize formFields.
     const formFields = initializeFormFields(props.formFieldConfigs);
 
+    // Always validate on initialization so that initValues are taken into account.
+    validateFormFields(formFields, props.formFieldConfigs, false);
+
     // Augment FormFields with events (helpers).
     const formFieldsState: FormFieldsState = {};
 
@@ -251,6 +254,31 @@ export function initializeFormFields<T extends object = any>(formFieldConfigs: F
   return formFields;
 }
 
+export function initializeFormFieldsServerSide<T extends object = any>(
+  formFieldConfigs: FormFieldConfig[]
+): { formFields: FormFields<T> } & ValidationResult {
+  const formFields = initializeFormFields(formFieldConfigs);
+
+  // Validate like we would be for a form submission.
+  const validationResult = validateFormFields(formFields, formFieldConfigs, true);
+
+  // Update formFieldConfigs with the result of the validations.
+  formFieldConfigs.forEach((formFieldConfig) => {
+    const formField = formFields[formFieldConfig.name];
+
+    formFieldConfig.dirty = formField.dirty;
+    formFieldConfig.errors = formField.errors;
+    formFieldConfig.hasError = formField.hasError;
+    formFieldConfig.helperText = formField.helperText;
+    formFieldConfig.initValue = formField.value;
+  });
+
+  return {
+    ...validationResult,
+    formFields: formFields,
+  };
+}
+
 // tslint:disable-next-line: cyclomatic-complexity
 export function isValid(
   name: string,
@@ -411,8 +439,7 @@ export function validateFormFields(
   formFields: FormFields,
   formFieldConfigs: FormFieldConfig[],
   submitting: boolean,
-  onlyName?: string,
-  updateFormFieldConfigs?: boolean
+  onlyName?: string
 ): ValidationResult {
   // Ideally we'd clone formFields so we're not modifying a state variable directly, outside setState; but
   // we can't because formFields contains functions.
@@ -422,20 +449,6 @@ export function validateFormFields(
   } else {
     Object.keys(formFields).forEach((name) => {
       stateModified = validateAndDetectChanges(name, formFields, formFieldConfigs, submitting) || stateModified;
-    });
-  }
-
-  // Check if we need to update formFieldConfigs with the result of the validations.
-  // This is primarily used for server-side rendering.
-  if (updateFormFieldConfigs) {
-    formFieldConfigs.forEach((formFieldConfig) => {
-      const formField = formFields[formFieldConfig.name];
-
-      formFieldConfig.dirty = formField.dirty;
-      formFieldConfig.errors = formField.errors;
-      formFieldConfig.hasError = formField.hasError;
-      formFieldConfig.helperText = formField.helperText;
-      formFieldConfig.initValue = formField.value;
     });
   }
 
