@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/cdeutsch/classy-forms/compare/v0.1.12...v0.2.0) (2020-03-17)
+
+Add `formKey` Provider property that can be used to reset the internal formFields state and re-run validation. Useful after making an async call to update the database and you want to reset the dirty flags, etc.
+
+Update `FormField` interface so it only contains properties that need to be managed in "state". Move the other properties to `FormFieldHelpers`
+
+Update `FormsProvider` so it will look for `formKey` changes and re-run what we do in the constructor.
+
+Added `updateFormFieldConfigs` flag to `validateFormFields` which can be used in server-side rendering scenarios to copy the results of the validation back to `formFieldConfigs` so they can be used to initialize the `FormsProvider`.
+
+Add `hasError`, `errors`, and `dirty` to `FormFieldConfig` so consumer can manually control the overall Form state.
+
+### ⚠ BREAKING CHANGES:
+
+- Rename `createFormFields` to `initializeFormFields` so it better reflects what it does. The new `createFormFields` is now responsible for combining `FormFieldConfig` properties with `FormFieldState` to make in convenient to access all FormField related properties in one object.
+
+- Change `getHelperText` signature so it's consistent with `isValid`.
+
+- Renamed `FormFieldWithHelpers` to `FormFieldAndEventHelpers`, and `FormFieldsWithHelpers` to `FormFieldsWithEventHelpers`
+
+
 ### [0.1.12](https://github.com/cdeutsch/classy-forms/compare/v0.1.11...v0.1.12) (2020-03-16)
 
 Pass `reset` and `isDirty` when `onSubmit` is called.
@@ -76,7 +97,7 @@ Add `defaultInitValue` because we're using this logic in 3 places now and I can 
 
 Add `isEqual` option so you can do a "deep equal" to set the `dirty` flag if desired.
 
-BREAKING CHANGE:
+### ⚠ BREAKING CHANGES:
 
 Rename `formFieldConfig.value` to `formFieldConfig.initValue` to better clarify what it does.
 

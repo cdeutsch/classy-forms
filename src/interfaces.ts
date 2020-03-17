@@ -44,8 +44,11 @@ export interface FormFieldConfig {
   validateOnChange?: boolean;
   helperText?: string; // Helper text to display. Overridden by invalidText when invalid, and getHelperText if both exist.
   invalidText?: string; // Helper text displayed on error. Overridden by getHelperText if both exist.
-  // error?: boolean;
-  // dirty?: boolean;
+
+  // Extra props used to manually control the state.
+  hasError?: boolean;
+  errors?: ErrorType[];
+  dirty?: boolean;
 
   // Validations:
   required?: boolean;
@@ -71,45 +74,66 @@ export interface FormFieldConfig {
   minLength?: number;
 
   isValid?(formField: FormField, formFields: FormFields, submitting?: boolean): boolean;
-  getHelperText?(formField: FormField, submitting?: boolean): string | undefined;
+  getHelperText?(formField: FormField, formFields: FormFields, submitting?: boolean): string | undefined;
 }
 
 export interface FormField {
-  name: string;
   value: Value;
   hasError: boolean;
   errors: ErrorType[];
-  required: boolean;
   dirty: boolean;
   helperText?: string;
+}
+
+export interface FormFieldHelpers {
+  name: string;
+  required: boolean;
   label?: string;
 }
 
-export interface FormFieldWithHelpers extends FormField {
+export interface FormFieldEventHelpers {
   onChange(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void;
   onChangeChecked(event: React.ChangeEvent<HTMLInputElement>): void;
   onBlur(): void;
   onChangeValue(value: Value): void;
 }
 
+export interface FormFieldAndState extends FormField, FormFieldEventHelpers {}
+
+export interface FormFieldAndHelpers extends FormField, FormFieldHelpers {}
+
+export interface FormFieldAndEventHelpers extends FormField, FormFieldHelpers, FormFieldEventHelpers {}
+
 export type FormFields<T extends object = any> = Record<Extract<keyof T, string>, FormField>;
 
-export type FormFieldsWithHelpers<T extends object = any> = Record<Extract<keyof T, string>, FormFieldWithHelpers>;
+export type FormFieldsState<T extends object = any> = Record<Extract<keyof T, string>, FormFieldAndState>;
+
+export type FormFieldsWithHelpers<T extends object = any> = Record<Extract<keyof T, string>, FormFieldAndHelpers>;
+
+export type FormFieldsWithEventHelpers<T extends object = any> = Record<
+  Extract<keyof T, string>,
+  FormFieldAndEventHelpers
+>;
 
 export interface FormsProviderProps<T extends object = any> {
+  formKey?: string | number;
   formFieldConfigs: FormFieldConfig[];
-  initFormFields?: FormFields<T>;
   options?: FormOptions;
   onSubmit?(
     event: React.FormEvent<HTMLFormElement>,
-    formFields: FormFieldsWithHelpers<T>,
+    formFields: FormFieldsWithEventHelpers<T>,
     reset: () => void,
     isDirty: () => boolean
   ): void;
 }
 
+export interface FormsProviderState<T extends object = any> {
+  formFields: FormFieldsState<T>;
+  formKey?: string | number;
+}
+
 export interface FormsContextContext<T extends object = any> {
-  formFields: FormFieldsWithHelpers<T>;
+  formFields: FormFieldsWithEventHelpers<T>;
 
   onSubmit(event: React.FormEvent<HTMLFormElement>): void;
   reset(): void;
