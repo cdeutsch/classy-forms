@@ -12,10 +12,11 @@ export interface ClassyFormProps<P = {}>
 
 export class ClassyForm extends React.Component<ClassyFormProps> {
   render() {
-    const { children, formFieldConfigs, initFormFields, onSubmit, options, ...passthrough } = this.props;
+    const { children, formFieldConfigs, formKey, initFormFields, onSubmit, options, ...passthrough } = this.props;
 
     return (
       <FormsProvider
+        formKey={formKey}
         formFieldConfigs={formFieldConfigs}
         initFormFields={initFormFields}
         options={options}

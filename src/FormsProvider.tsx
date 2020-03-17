@@ -4,10 +4,12 @@ import {
   ErrorType,
   FormField,
   FormFieldConfig,
+  FormFieldHelpers,
   FormFields,
-  FormFieldsWithHelpers,
+  FormFieldsState,
   FormsContextContext,
   FormsProviderProps,
+  FormsProviderState,
   ValidationResult,
   Value,
 } from './interfaces';
@@ -27,20 +29,20 @@ export const FormsContext = React.createContext<FormsContextContext>({
 
 export const FormsConsumer = FormsContext.Consumer;
 
-export class FormsProvider extends React.Component<FormsProviderProps, FormsContextContext> {
+export class FormsProvider extends React.Component<FormsProviderProps, FormsProviderState> {
   constructor(props: FormsProviderProps) {
     super(props);
 
     // Create formFields or use initial.
-    const formFields = props.initFormFields || createFormFields(props.formFieldConfigs);
+    const formFields = props.initFormFields || initializeFormFields(props.formFieldConfigs);
 
     // Augment FormFields with events (helpers).
-    const formFieldsWithHelpers: FormFieldsWithHelpers = {};
+    const formFieldsState: FormFieldsState = {};
 
     Object.keys(formFields).forEach((key) => {
       const formField = formFields[key];
 
-      formFieldsWithHelpers[key] = {
+      formFieldsState[key] = {
         ...formField,
         onChange: this.onChange.bind(this, key),
         onChangeChecked: this.onChangeChecked.bind(this, key),
@@ -50,15 +52,51 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     });
 
     this.state = {
-      formFields: formFieldsWithHelpers,
+      formFields: formFieldsState,
+      formKey: this.props.formKey,
+    };
+  }
+
+  static getDerivedStateFromProps(
+    nextProps: FormsProviderProps,
+    prevState: FormsProviderState
+  ): Partial<FormsProviderState> | null {
+    // If the formKey changed, then re-run the setup we do in the constructor.
+    if (nextProps.formKey !== prevState.formKey) {
+      const formFields = nextProps.formFieldConfigs.reduce<FormFieldsState>((accumulator, formFieldConfig) => {
+        accumulator[formFieldConfig.name] = {
+          // Pass along the previous formFields State so we have access to the Event Helpers.
+          ...prevState.formFields[formFieldConfig.name],
+          // Override non-event helpers with initialized values.
+          ...initializeFormField(formFieldConfig),
+        };
+
+        return accumulator;
+      }, {});
+
+      // Re-run validation.
+      validateFormFields(formFields, nextProps.formFieldConfigs, false);
+
+      return {
+        formFields: formFields,
+        formKey: nextProps.formKey,
+      };
+    }
+
+    // Return null to indicate no change to state.
+    return null;
+  }
+
+  render() {
+    // Merge state and props into the final FormField context value.
+    const context: FormsContextContext = {
+      formFields: createFormFields(this.props.formFieldConfigs, this.state.formFields),
       onSubmit: this.onSubmit,
       reset: this.reset,
       isDirty: this.isDirty,
     };
-  }
 
-  render() {
-    return <FormsContext.Provider value={this.state}>{this.props.children}</FormsContext.Provider>;
+    return <FormsContext.Provider value={context}>{this.props.children}</FormsContext.Provider>;
   }
 
   onChangeValue = (name: string, value: Value) => {
@@ -113,10 +151,11 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
   };
 
   onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const { formFields, isDirty, reset } = this.state;
+    const { formFieldConfigs } = this.props;
+    const { formFields } = this.state;
 
     // Don't submit the form if there are errors.
-    const validationResult = validateFormFields(formFields, this.props.formFieldConfigs, true);
+    const validationResult = validateFormFields(formFields, formFieldConfigs, true);
     if (validationResult.stateModified) {
       this.setState({
         formFields: formFields,
@@ -126,7 +165,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
     if (validationResult.allValid) {
       // Call custom onSubmit.
       if (this.props.onSubmit) {
-        this.props.onSubmit(event, formFields, reset, isDirty);
+        this.props.onSubmit(event, createFormFields(formFieldConfigs, formFields), this.reset, this.isDirty);
       }
     } else {
       // Prevent <form> from submitting.
@@ -161,28 +200,50 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsCont
   };
 }
 
-export function createFormField(formFieldConfig: FormFieldConfig): FormField {
+/**
+ * Combine formFieldConfigs and formFields to create a "complete" FormFields record.
+ */
+function createFormFields<F extends FormField, T extends object = any>(
+  formFieldConfigs: FormFieldConfig[],
+  formFields: Record<Extract<keyof T, string>, F>
+): Record<Extract<keyof T, string>, FormField & FormFieldHelpers & F> {
+  const combinedFormFields: Record<string, FormField & FormFieldHelpers & F> = {};
+
+  formFieldConfigs.forEach((formFieldConfig) => {
+    const formField = formFields[formFieldConfig.name as Extract<keyof T, string>];
+
+    combinedFormFields[formFieldConfig.name] = {
+      ...formField,
+      name: formFieldConfig.name,
+      required: formFieldConfig.required || false,
+      label: formFieldConfig.label,
+      // Merge Config/Props and State which will overwrite any existing value in formFieldState.
+      helperText: formFieldConfig.helperText || formField.helperText,
+    };
+  });
+
+  return combinedFormFields;
+}
+
+export function initializeFormField(formFieldConfig: FormFieldConfig): FormField {
   // Convert formFieldConfigs to formField.
   return {
-    name: formFieldConfig.name,
     value: defaultInitValue(formFieldConfig),
     // TODO: decide if setting the init value for hasError, etc is necessary.
     // hasError: formFieldConfig.hasError || false,
     // errors: formFieldConfig.errors || false,
     hasError: false,
     errors: [],
-    required: formFieldConfig.required || false,
     dirty: false,
-    label: formFieldConfig.label,
   };
 }
 
-export function createFormFields<T extends object = any>(formFieldConfigs: FormFieldConfig[]): FormFields<T> {
+export function initializeFormFields<T extends object = any>(formFieldConfigs: FormFieldConfig[]): FormFields<T> {
   // Convert FormFieldConfig to FormField class instance.
   const formFields: FormFields = {};
 
   formFieldConfigs.forEach((formFieldConfig) => {
-    formFields[formFieldConfig.name] = createFormField(formFieldConfig);
+    formFields[formFieldConfig.name] = initializeFormField(formFieldConfig);
   });
 
   return formFields;
@@ -190,14 +251,17 @@ export function createFormFields<T extends object = any>(formFieldConfigs: FormF
 
 // tslint:disable-next-line: cyclomatic-complexity
 export function isValid(
-  formField: FormField,
+  name: string,
   formFields: FormFields,
-  formFieldConfig: FormFieldConfig,
+  formFieldConfigs: FormFieldConfig[],
   submitting: boolean
 ): ErrorType[] {
+  const formField = formFields[name];
+  const formFieldConfig = getFormFieldConfig(name, formFieldConfigs);
+
   const errors: ErrorType[] = [];
 
-  if (formField.required && (formField.dirty || submitting) && !formField.value) {
+  if (formFieldConfig.required && (formField.dirty || submitting) && !formField.value) {
     errors.push('required');
   }
   if (formFieldConfig.isExisty && !validations.isExisty(formField, formFields, submitting)) {
@@ -284,14 +348,17 @@ function arraysEqual(array1: any[], array2: any[]): boolean {
 }
 
 function validateAndDetectChanges(
-  formField: FormField,
+  name: string,
   formFields: FormFields,
-  formFieldConfig: FormFieldConfig,
+  formFieldConfigs: FormFieldConfig[],
   submitting: boolean
 ): boolean {
+  const formField = formFields[name];
+  const formFieldConfig = getFormFieldConfig(name, formFieldConfigs);
+
   const wasValid = !formField.hasError;
 
-  const errors = isValid(formField, formFields, formFieldConfig, submitting);
+  const errors = isValid(name, formFields, formFieldConfigs, submitting);
   const valid = errors.length === 0;
   formField.hasError = !valid;
   // Always mark dirty once we have an error (usually this means the form was submitted)
@@ -312,7 +379,7 @@ function validateAndDetectChanges(
     formField.helperText = formFieldConfig.invalidText;
   }
   if (formFieldConfig.getHelperText) {
-    formField.helperText = formFieldConfig.getHelperText(formField, submitting);
+    formField.helperText = formFieldConfig.getHelperText(formField, formFields, submitting);
   }
 
   // Detect if we changed any fields.
@@ -343,28 +410,31 @@ export function validateFormFields(
   formFields: FormFields,
   formFieldConfigs: FormFieldConfig[],
   submitting: boolean,
-  onlyName?: string
+  onlyName?: string,
+  updateFormFieldConfigs?: boolean
 ): ValidationResult {
   // Ideally we'd clone formFields so we're not modifying a state variable directly, outside setState; but
   // we can't because formFields contains functions.
   let stateModified = false;
   if (onlyName && formFields[onlyName]) {
-    stateModified =
-      validateAndDetectChanges(
-        formFields[onlyName],
-        formFields,
-        getFormFieldConfig(onlyName, formFieldConfigs),
-        submitting
-      ) || stateModified;
+    stateModified = validateAndDetectChanges(onlyName, formFields, formFieldConfigs, submitting) || stateModified;
   } else {
     Object.keys(formFields).forEach((name) => {
-      stateModified =
-        validateAndDetectChanges(
-          formFields[name],
-          formFields,
-          getFormFieldConfig(name, formFieldConfigs),
-          submitting
-        ) || stateModified;
+      stateModified = validateAndDetectChanges(name, formFields, formFieldConfigs, submitting) || stateModified;
+    });
+  }
+
+  // Check if we need to update formFieldConfigs with the result of the validations.
+  // This is primarily used for server-side rendering.
+  if (updateFormFieldConfigs) {
+    formFieldConfigs.forEach((formFieldConfig) => {
+      const formField = formFields[formFieldConfig.name];
+
+      formFieldConfig.dirty = formField.dirty;
+      formFieldConfig.errors = formField.errors;
+      formFieldConfig.hasError = formField.hasError;
+      formFieldConfig.helperText = formField.helperText;
+      formFieldConfig.initValue = formField.value;
     });
   }
 
