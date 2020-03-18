@@ -248,16 +248,16 @@ export function initializeFormFields<T extends object = any>(formFieldConfigs: F
   return formFields;
 }
 
-export function updateFormFieldConfigs(formFieldConfigs: FormFieldConfig[], formFields: FormFields) {
+export function syncState(sourceFormFields: FormFields, destFormFieldConfigs: FormFieldConfig[]) {
   // Update formFieldConfigs with the result of the validations.
-  formFieldConfigs.forEach((formFieldConfig) => {
-    const formField = formFields[formFieldConfig.name];
+  destFormFieldConfigs.forEach((destFormFieldConfig) => {
+    const formField = sourceFormFields[destFormFieldConfig.name];
 
-    formFieldConfig.helperText = formField.helperText;
-    formFieldConfig.initDirty = formField.dirty;
-    formFieldConfig.initErrors = formField.errors;
-    formFieldConfig.initHasError = formField.hasError;
-    formFieldConfig.initValue = formField.value;
+    destFormFieldConfig.helperText = formField.helperText;
+    destFormFieldConfig.initDirty = formField.dirty;
+    destFormFieldConfig.initErrors = formField.errors;
+    destFormFieldConfig.initHasError = formField.hasError;
+    destFormFieldConfig.initValue = formField.value;
   });
 }
 
