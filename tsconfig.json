@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "outDir": "build/main",
     "rootDir": "src",
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "esnext",
     "declaration": true,
     "inlineSourceMap": true,
     "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
@@ -41,6 +40,6 @@
     "typeRoots": ["node_modules/@types"]
   },
   "include": ["src"],
-  "exclude": ["node_modules", "build"],
+  "exclude": ["node_modules", "build", "dist", "demo"],
   "compileOnSave": false
 }

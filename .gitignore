@@ -27,4 +27,4 @@ node_modules/
 
 # TypeScript cache
 *.tsbuildinfo
-build/
+dist/
