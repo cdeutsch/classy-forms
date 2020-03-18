@@ -39,16 +39,18 @@ export interface FormOptions {
 
 export interface FormFieldConfig {
   name: string;
-  initValue?: Value;
   label?: string;
   validateOnChange?: boolean;
-  helperText?: string; // Helper text to display. Overridden by invalidText when invalid, and getHelperText if both exist.
-  invalidText?: string; // Helper text displayed on error. Overridden by getHelperText if both exist.
 
-  // Extra props used to manually control the state.
-  hasError?: boolean;
-  errors?: ErrorType[];
-  dirty?: boolean;
+  // Props used to initialize FormFields:
+  initValue?: Value;
+  initHasError?: boolean;
+  initErrors?: ErrorType[];
+  initDirty?: boolean;
+
+  // Helper Text:
+  helperText?: string; // Helper text to display on validation. Overridden by invalidText when invalid, and getHelperText if both exist.
+  invalidText?: string; // Helper text displayed on error. Overridden by getHelperText if both exist.
 
   // Validations:
   required?: boolean;
