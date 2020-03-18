@@ -220,13 +220,6 @@ function createFormFields<F extends FormField, T extends object = any>(
       name: formFieldConfig.name,
       required: formFieldConfig.required || false,
       label: formFieldConfig.label,
-      // Merge Config/Props and State which will overwrite any existing value in formFieldState.
-      // The internal state has precedence over because config/props likely aren't going to detect
-      //   changes and update themselves.
-      hasError: formField.hasError !== undefined ? formField.hasError : formFieldConfig.hasError,
-      errors: formField.errors !== undefined ? formField.errors : formFieldConfig.errors,
-      dirty: formField.dirty !== undefined ? formField.dirty : formFieldConfig.dirty,
-      helperText: formField.helperText !== undefined ? formField.helperText : formFieldConfig.helperText,
     };
   });
 
@@ -237,9 +230,9 @@ export function initializeFormField(formFieldConfig: FormFieldConfig): FormField
   // Convert formFieldConfigs to formField.
   return {
     value: defaultInitValue(formFieldConfig),
-    hasError: formFieldConfig.hasError || false,
-    errors: formFieldConfig.errors || [],
-    dirty: formFieldConfig.dirty || false,
+    hasError: formFieldConfig.initHasError || false,
+    errors: formFieldConfig.initErrors || [],
+    dirty: formFieldConfig.initDirty || false,
     helperText: formFieldConfig.helperText,
   };
 }
@@ -260,10 +253,10 @@ export function updateFormFieldConfigs(formFieldConfigs: FormFieldConfig[], form
   formFieldConfigs.forEach((formFieldConfig) => {
     const formField = formFields[formFieldConfig.name];
 
-    formFieldConfig.dirty = formField.dirty;
-    formFieldConfig.errors = formField.errors;
-    formFieldConfig.hasError = formField.hasError;
     formFieldConfig.helperText = formField.helperText;
+    formFieldConfig.initDirty = formField.dirty;
+    formFieldConfig.initErrors = formField.errors;
+    formFieldConfig.initHasError = formField.hasError;
     formFieldConfig.initValue = formField.value;
   });
 }
@@ -393,6 +386,7 @@ function validateAndDetectChanges(
   formField.errors = errors.sort();
 
   const origHelperText = formField.helperText;
+  formField.helperText = formFieldConfig.helperText;
   if (formField.hasError && formFieldConfig.invalidText) {
     formField.helperText = formFieldConfig.invalidText;
   }
