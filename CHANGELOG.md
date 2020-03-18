@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/cdeutsch/classy-forms/compare/v0.2.2...v0.2.3) (2020-03-18)
+
+Prepend `init` to `formFieldConfig` props that are only used during initialization.
+
+Remove the merging of certain `formFieldConfigs` and `formFields` props in `createFormFields`. There just isn't a great way to do  it. It's too hard to know which one should take precedence and when.
+
+
 ### [0.2.2](https://github.com/cdeutsch/classy-forms/compare/v0.2.1...v0.2.2) (2020-03-18)
 
 Replace `initializeFormFieldsServerSide` with `updateFormFieldConfigs` because most places using server side rendering won't be able to pass along the full augmented formFields object. It will drop any functions like `isValid`
