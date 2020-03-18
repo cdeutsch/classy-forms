@@ -221,11 +221,12 @@ function createFormFields<F extends FormField, T extends object = any>(
       required: formFieldConfig.required || false,
       label: formFieldConfig.label,
       // Merge Config/Props and State which will overwrite any existing value in formFieldState.
-      // The "controlled" config/prop always has precedence.
-      hasError: formFieldConfig.hasError || formField.hasError,
-      errors: formFieldConfig.errors || formField.errors,
-      dirty: formFieldConfig.dirty || formField.dirty,
-      helperText: formFieldConfig.helperText || formField.helperText,
+      // The internal state has precedence over because config/props likely aren't going to detect
+      //   changes and update themselves.
+      hasError: formField.hasError !== undefined ? formField.hasError : formFieldConfig.hasError,
+      errors: formField.errors !== undefined ? formField.errors : formFieldConfig.errors,
+      dirty: formField.dirty !== undefined ? formField.dirty : formFieldConfig.dirty,
+      helperText: formField.helperText !== undefined ? formField.helperText : formFieldConfig.helperText,
     };
   });
 
@@ -254,14 +255,7 @@ export function initializeFormFields<T extends object = any>(formFieldConfigs: F
   return formFields;
 }
 
-export function initializeFormFieldsServerSide<T extends object = any>(
-  formFieldConfigs: FormFieldConfig[]
-): { formFields: FormFields<T> } & ValidationResult {
-  const formFields = initializeFormFields(formFieldConfigs);
-
-  // Validate like we would be for a form submission.
-  const validationResult = validateFormFields(formFields, formFieldConfigs, true);
-
+export function updateFormFieldConfigs(formFieldConfigs: FormFieldConfig[], formFields: FormFields) {
   // Update formFieldConfigs with the result of the validations.
   formFieldConfigs.forEach((formFieldConfig) => {
     const formField = formFields[formFieldConfig.name];
@@ -272,11 +266,6 @@ export function initializeFormFieldsServerSide<T extends object = any>(
     formFieldConfig.helperText = formField.helperText;
     formFieldConfig.initValue = formField.value;
   });
-
-  return {
-    ...validationResult,
-    formFields: formFields,
-  };
 }
 
 // tslint:disable-next-line: cyclomatic-complexity
