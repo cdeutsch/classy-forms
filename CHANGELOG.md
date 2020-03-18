@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/cdeutsch/classy-forms/compare/v0.2.1...v0.2.2) (2020-03-18)
+
+Replace `initializeFormFieldsServerSide` with `updateFormFieldConfigs` because most places using server side rendering won't be able to pass along the full augmented formFields object. It will drop any functions like `isValid`
+
+Adding `updateFormFieldConfigs` allows it to be called in the constructor client side using the results of the validation that was run server side.
+
+
 ### [0.2.1](https://github.com/cdeutsch/classy-forms/compare/v0.2.0...v0.2.1) (2020-03-17)
 
 Create a separate `initializeFormFieldsServerSide` function instead of passing a `updateFormFieldConfigs`.
