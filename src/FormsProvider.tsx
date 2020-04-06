@@ -21,6 +21,9 @@ export const FormsContext = React.createContext<FormsContextContext>({
   onSubmit: () => {},
   // tslint:disable-next-line: no-empty
   reset: () => {},
+  validate: (submitting: boolean): ValidationResult => {
+    return { allValid: true, stateModified: false };
+  },
   // tslint:disable-next-line: no-empty
   isDirty: () => {
     return false;
@@ -96,6 +99,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
       formFields: createFormFields(this.props.formFieldConfigs, this.state.formFields),
       onSubmit: this.onSubmit,
       reset: this.reset,
+      validate: this.validate,
       isDirty: this.isDirty,
     };
 
@@ -162,12 +166,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
     const { formFields } = this.state;
 
     // Don't submit the form if there are errors.
-    const validationResult = validateFormFields(formFields, formFieldConfigs, true);
-    if (validationResult.stateModified) {
-      this.setState({
-        formFields: formFields,
-      });
-    }
+    const validationResult = this.validate(true);
 
     if (validationResult.allValid) {
       // Call custom onSubmit.
@@ -178,6 +177,21 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
       // Prevent <form> from submitting.
       event.preventDefault();
     }
+  };
+
+  validate = (submitting: boolean = true): ValidationResult => {
+    const { formFieldConfigs } = this.props;
+    const { formFields } = this.state;
+
+    // Don't submit the form if there are errors.
+    const validationResult = validateFormFields(formFields, formFieldConfigs, submitting);
+    if (validationResult.stateModified) {
+      this.setState({
+        formFields: formFields,
+      });
+    }
+
+    return validationResult;
   };
 
   reset = () => {
