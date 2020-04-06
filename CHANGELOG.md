@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/cdeutsch/classy-forms/compare/v0.3.1...v0.3.2) (2020-04-06)
+
+Provide a `validate` function to be used when you're not using a regular `<form>`.
+
+
 ### [0.3.1](https://github.com/cdeutsch/classy-forms/compare/v0.3.0...v0.3.1) (2020-04-06)
 
 Add `FormOption` for defaulting to `validateOnChange`.
