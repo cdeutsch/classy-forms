@@ -32,6 +32,10 @@ export interface FormOptions {
    */
   dirtyMode?: DirtyMode;
   /**
+   * Run validation `onChange` instead of waiting for submit.
+   */
+  validateOnChange?: boolean;
+  /**
    * Function to use to compare equality. Used to calculate `dirty`.
    */
   isEqual?(valueA: Value, valueB: Value): boolean;
