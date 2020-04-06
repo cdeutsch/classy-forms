@@ -124,7 +124,11 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
       }
 
       // Validate immediately only if there are errors or validateOnChange is true.
-      if (formField.hasError || formFieldConfig.validateOnChange) {
+      if (
+        formField.hasError ||
+        (options?.validateOnChange && formFieldConfig.validateOnChange !== false) ||
+        formFieldConfig.validateOnChange
+      ) {
         validateFormFields(formFields, formFieldConfigs, false, name);
       }
 
