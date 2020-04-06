@@ -143,6 +143,7 @@ export interface FormsContextContext<T extends object = any> {
 
   onSubmit(event: React.FormEvent<HTMLFormElement>): void;
   reset(): void;
+  validate(submitting: boolean): ValidationResult;
   isDirty(): boolean;
 }
 
