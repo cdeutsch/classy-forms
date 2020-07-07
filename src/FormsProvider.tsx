@@ -176,6 +176,10 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
     } else {
       // Prevent <form> from submitting.
       event.preventDefault();
+      // Stop propagation in case we're in a React Portal, because
+      // portals propagate events along the React component hierarchy, not the DOM hierarchy 🤦️
+      // https://github.com/facebook/react/issues/11387
+      event.stopPropagation();
     }
   };
 
