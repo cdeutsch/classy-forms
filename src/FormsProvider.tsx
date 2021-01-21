@@ -295,7 +295,11 @@ export function isValid(
 
   const errors: ErrorType[] = [];
 
-  if (formFieldConfig.required && (formField.dirty || submitting) && !formField.value) {
+  if (
+    formFieldConfig.required &&
+    (formField.dirty || submitting) &&
+    validations.isDefaultRequiredValue(formField, formFields, submitting)
+  ) {
     errors.push('required');
   }
   if (formFieldConfig.isExisty && !validations.isExisty(formField, formFields, submitting)) {
