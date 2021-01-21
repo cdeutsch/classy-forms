@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/cdeutsch/classy-forms/compare/v1.0.0...v1.0.1) (2021-01-21)
+
+Better "required" check. Values like `0` should be valid. They previously weren't.
+
+
 ## [1.0.0](https://github.com/cdeutsch/classy-forms/compare/v0.3.2...v1.0.0) (2020-07-07)
 
 Stop propagation in case we're in a React Portal, because portals propagate events along the React component hierarchy, not the DOM hierarchy.
