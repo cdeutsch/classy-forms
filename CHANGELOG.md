@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/cdeutsch/classy-forms/compare/v1.0.1...v2.0.0) (2021-04-07)
+
+Improved the typings which will be useful if/when you upgrade your project to `typescript@4.2.3`
+
+### ⚠ BREAKING CHANGES:
+
+- May need to pass around typings when using `ClassyForm` and `FormsProvider`. Ex:
+
+```
+interface FormProps {
+  name: string;
+  email: string;
+}
+
+<FormsProvider<FormProps>
+  formFieldConfigs={[]}
+>
+  ...
+</FormsProvider>
+```
+
 ### [1.0.1](https://github.com/cdeutsch/classy-forms/compare/v1.0.0...v1.0.1) (2021-01-21)
 
 Better "required" check. Values like `0` should be valid. They previously weren't.
