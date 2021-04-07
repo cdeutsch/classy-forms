@@ -26,6 +26,10 @@ export type ErrorType =
 
 export type DirtyMode = 'NotEqual' | 'OnChange';
 
+export interface FormObject {
+  [key: string]: any;
+}
+
 export interface FormOptions {
   /**
    * Mode to use when calculating `dirty`. Default is `NotEqual`.
@@ -110,18 +114,15 @@ export interface FormFieldAndHelpers extends FormField, FormFieldHelpers {}
 
 export interface FormFieldAndEventHelpers extends FormField, FormFieldHelpers, FormFieldEventHelpers {}
 
-export type FormFields<T extends object = any> = Record<Extract<keyof T, string>, FormField>;
+export type FormFields<T = FormObject> = Record<Extract<keyof T, string>, FormField>;
 
-export type FormFieldsState<T extends object = any> = Record<Extract<keyof T, string>, FormFieldAndState>;
+export type FormFieldsState<T = FormObject> = Record<Extract<keyof T, string>, FormFieldAndState>;
 
-export type FormFieldsWithHelpers<T extends object = any> = Record<Extract<keyof T, string>, FormFieldAndHelpers>;
+export type FormFieldsWithHelpers<T = FormObject> = Record<Extract<keyof T, string>, FormFieldAndHelpers>;
 
-export type FormFieldsWithEventHelpers<T extends object = any> = Record<
-  Extract<keyof T, string>,
-  FormFieldAndEventHelpers
->;
+export type FormFieldsWithEventHelpers<T = FormObject> = Record<Extract<keyof T, string>, FormFieldAndEventHelpers>;
 
-export interface FormsProviderProps<T extends object = any> {
+export interface FormsProviderProps<T = FormObject> {
   formKey?: string | number;
   formFieldConfigs: FormFieldConfig[];
   options?: FormOptions;
@@ -133,12 +134,12 @@ export interface FormsProviderProps<T extends object = any> {
   ): void;
 }
 
-export interface FormsProviderState<T extends object = any> {
-  formFields: FormFieldsState<T>;
+export interface FormsProviderState {
+  formFields: FormFieldsState;
   formKey?: string | number;
 }
 
-export interface FormsContextContext<T extends object = any> {
+export interface FormsContextContext<T = FormObject> {
   formFields: FormFieldsWithEventHelpers<T>;
 
   onSubmit(event: React.FormEvent<HTMLFormElement>): void;

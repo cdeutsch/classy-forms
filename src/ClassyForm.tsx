@@ -2,15 +2,15 @@ import React from 'react';
 
 import { Form } from './Form';
 import { FormsConsumer, FormsProvider } from './FormsProvider';
-import { FormsContextContext, FormsProviderProps } from './interfaces';
+import { FormObject, FormsContextContext, FormsProviderProps } from './interfaces';
 
-export interface ClassyFormProps
+export interface ClassyFormProps<T = FormObject>
   extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'>,
-    FormsProviderProps {
+    FormsProviderProps<T> {
   children(props: FormsContextContext): React.ReactElement | null;
 }
 
-export class ClassyForm extends React.Component<ClassyFormProps> {
+export class ClassyForm<T = FormObject> extends React.Component<ClassyFormProps<T>> {
   render() {
     const { children, formFieldConfigs, formKey, onSubmit, options, ...passthrough } = this.props;
 
