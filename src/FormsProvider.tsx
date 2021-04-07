@@ -4,9 +4,10 @@ import {
   ErrorType,
   FormField,
   FormFieldConfig,
-  FormFieldHelpers,
   FormFields,
   FormFieldsState,
+  FormFieldsWithEventHelpers,
+  FormObject,
   FormsContextContext,
   FormsProviderProps,
   FormsProviderState,
@@ -32,7 +33,7 @@ export const FormsContext = React.createContext<FormsContextContext>({
 
 export const FormsConsumer = FormsContext.Consumer;
 
-export class FormsProvider extends React.Component<FormsProviderProps, FormsProviderState> {
+export class FormsProvider<T = FormObject> extends React.Component<FormsProviderProps<T>, FormsProviderState> {
   constructor(props: FormsProviderProps) {
     super(props);
 
@@ -43,7 +44,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
     validateFormFields(formFields, props.formFieldConfigs, false);
 
     // Augment FormFields with events (helpers).
-    const formFieldsState: FormFieldsState = {};
+    const formFieldsState: FormFieldsState = {} as any;
 
     Object.keys(formFields).forEach((key) => {
       const formField = formFields[key];
@@ -171,7 +172,7 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
     if (validationResult.allValid) {
       // Call custom onSubmit.
       if (this.props.onSubmit) {
-        this.props.onSubmit(event, createFormFields(formFieldConfigs, formFields), this.reset, this.isDirty);
+        this.props.onSubmit(event, createFormFields<T>(formFieldConfigs, formFields) as any, this.reset, this.isDirty);
       }
     } else {
       // Prevent <form> from submitting.
@@ -228,16 +229,17 @@ export class FormsProvider extends React.Component<FormsProviderProps, FormsProv
 /**
  * Combine formFieldConfigs and formFields to create a "complete" FormFields record.
  */
-function createFormFields<F extends FormField, T extends object = any>(
+function createFormFields<T = FormObject>(
   formFieldConfigs: FormFieldConfig[],
-  formFields: Record<Extract<keyof T, string>, F>
-): Record<Extract<keyof T, string>, FormField & FormFieldHelpers & F> {
-  const combinedFormFields: Record<string, FormField & FormFieldHelpers & F> = {};
+  formFields: FormFieldsState
+): FormFieldsWithEventHelpers<T> {
+  // tslint:disable-next-line: no-object-literal-type-assertion
+  const combinedFormFields: FormFieldsWithEventHelpers<T> = {} as FormFieldsWithEventHelpers<T>;
 
   formFieldConfigs.forEach((formFieldConfig) => {
-    const formField = formFields[formFieldConfig.name as Extract<keyof T, string>];
+    const formField = formFields[formFieldConfig.name];
 
-    combinedFormFields[formFieldConfig.name] = {
+    combinedFormFields[formFieldConfig.name as Extract<keyof T, string>] = {
       ...formField,
       name: formFieldConfig.name,
       required: formFieldConfig.required || false,
@@ -259,12 +261,13 @@ export function initializeFormField(formFieldConfig: FormFieldConfig): FormField
   };
 }
 
-export function initializeFormFields<T extends object = any>(formFieldConfigs: FormFieldConfig[]): FormFields<T> {
+export function initializeFormFields<T = FormObject>(formFieldConfigs: FormFieldConfig[]): FormFields<T> {
   // Convert FormFieldConfig to FormField class instance.
-  const formFields: FormFields = {};
+  // tslint:disable-next-line: no-object-literal-type-assertion
+  const formFields: FormFields<T> = {} as FormFields<T>;
 
   formFieldConfigs.forEach((formFieldConfig) => {
-    formFields[formFieldConfig.name] = initializeFormField(formFieldConfig);
+    formFields[formFieldConfig.name as Extract<keyof T, string>] = initializeFormField(formFieldConfig);
   });
 
   return formFields;
@@ -467,7 +470,7 @@ export function validateFormFields(
   };
 }
 
-export function formFieldsToObject<T extends object = any>(formFields: FormFields<T>) {
+export function formFieldsToObject<T = FormObject>(formFields: FormFields<T>) {
   return Object.keys(formFields).reduce<T>(
     (accumulator, key) => ({
       ...accumulator,
