@@ -35,11 +35,7 @@ nextApp.prepare().then(() => {
     return nextRequestHandler(req, res);
   });
 
-  app.listen(port, (err) => {
-    if (err) {
-      throw err;
-    }
-
+  app.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
   });
 });
