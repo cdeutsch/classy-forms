@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { red } from '@material-ui/core/colors';
-import { FormFieldWithHelpers } from 'classy-forms';
+import { FormFieldAndEventHelpers } from 'classy-forms';
 import React from 'react';
 
 const rootCss = css`
@@ -59,7 +59,7 @@ const errorCss = css`
 
 export interface FormInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'name' | 'required' | 'value' | 'onBlur' | 'onChange'> {
-  formField: FormFieldWithHelpers;
+  formField: FormFieldAndEventHelpers;
 }
 
 export class FormInput extends React.Component<FormInputProps> {

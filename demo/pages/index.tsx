@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { Button } from '@material-ui/core';
-import { ClassyForm, FormField, FormFieldConfig, FormsContextContext } from 'classy-forms';
+import { ClassyForm, FormField, FormFieldConfig, FormFields, FormsContextContext } from 'classy-forms';
 import React from 'react';
 
 import { FormInput } from '../components/FormInput';
@@ -13,7 +13,7 @@ interface UserFormFields {
   email: string;
 }
 
-function getErrorText(formField: FormField, submitting?: boolean) {
+function getErrorText(formField: FormField, formFields: FormFields, submitting?: boolean) {
   switch (formField.errors[0]) {
     case 'required':
       return 'Required';
