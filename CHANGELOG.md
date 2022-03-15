@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://github.com/cdeutsch/classy-forms/compare/v2.1.0...v2.1.2) (2022-03-15)
+
+Return validation results from `forceValidate`.
+
+
 ### [2.1.1](https://github.com/cdeutsch/classy-forms/compare/v2.1.0...v2.1.1) (2022-03-15)
 
 Add ability to force validate a field.
