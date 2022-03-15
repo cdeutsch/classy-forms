@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   ErrorType,
+  ForceValidationResult,
   FormField,
   FormFieldConfig,
   FormFields,
@@ -163,7 +164,7 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
     }
   };
 
-  forceValidate = (name: string) => {
+  forceValidate = (name: string): ForceValidationResult => {
     const { formFields } = this.state;
 
     // We're forcing validation so set `submitting` to true.
@@ -173,6 +174,13 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
         formFields: formFields,
       });
     }
+
+    return {
+      ...validationResult,
+      fieldDirty: formFields[name] && !formFields[name].dirty,
+      fieldErrors: (formFields[name] && !formFields[name].errors) || [],
+      fieldValid: formFields[name] && !formFields[name].hasError,
+    };
   };
 
   onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
