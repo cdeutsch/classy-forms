@@ -106,7 +106,7 @@ export interface FormFieldEventHelpers {
   onChangeChecked(event: React.ChangeEvent<HTMLInputElement>): void;
   onBlur(): void;
   onChangeValue(value: Value): void;
-  forceValidate(): void;
+  forceValidate(): ForceValidationResult;
 }
 
 export interface FormFieldAndState extends FormField, FormFieldEventHelpers {}
@@ -152,4 +152,10 @@ export interface FormsContextContext<T = FormObject> {
 export interface ValidationResult {
   allValid: boolean;
   stateModified: boolean;
+}
+
+export interface ForceValidationResult extends ValidationResult {
+  fieldDirty: boolean;
+  fieldErrors: ErrorType[];
+  fieldValid: boolean;
 }
