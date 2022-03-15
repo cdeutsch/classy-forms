@@ -106,6 +106,7 @@ export interface FormFieldEventHelpers {
   onChangeChecked(event: React.ChangeEvent<HTMLInputElement>): void;
   onBlur(): void;
   onChangeValue(value: Value): void;
+  forceValidate(): void;
 }
 
 export interface FormFieldAndState extends FormField, FormFieldEventHelpers {}

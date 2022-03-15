@@ -51,6 +51,7 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
 
       formFieldsState[key] = {
         ...formField,
+        forceValidate: this.forceValidate.bind(this, key),
         onChange: this.onChange.bind(this, key),
         onChangeChecked: this.onChangeChecked.bind(this, key),
         onBlur: this.onBlur.bind(this, key),
@@ -155,6 +156,18 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
     const { formFields } = this.state;
 
     const validationResult = validateFormFields(formFields, this.props.formFieldConfigs, false, name);
+    if (validationResult.stateModified) {
+      this.setState({
+        formFields: formFields,
+      });
+    }
+  };
+
+  forceValidate = (name: string) => {
+    const { formFields } = this.state;
+
+    // We're forcing validation so set `submitting` to true.
+    const validationResult = validateFormFields(formFields, this.props.formFieldConfigs, true, name);
     if (validationResult.stateModified) {
       this.setState({
         formFields: formFields,
