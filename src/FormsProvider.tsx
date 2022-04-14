@@ -502,6 +502,21 @@ export function validateFormFields(
   };
 }
 
+// Helper to validate FormData.
+export function validateFormData(
+  formData: FormData,
+  formFieldConfigs: FormFieldConfig[]
+): [FormFields, ValidationResult] {
+  // Initialize formFieldConfigs `initValue`s using FormData.
+  initializeFromFormData(formData, formFieldConfigs);
+  // Initialize the formFields for the formFieldConfigs.
+  const formFields = initializeFormFields(formFieldConfigs);
+  // Validate the results.
+  const validationResult = validateFormFields(formFields, formFieldConfigs, true);
+
+  return [formFields, validationResult];
+}
+
 export function formFieldsToObject<T = FormObject>(formFields: FormFields<T>) {
   return Object.keys(formFields).reduce<T>(
     (accumulator, key) => ({
