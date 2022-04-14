@@ -294,6 +294,17 @@ export function initializeFormFields<T = FormObject>(formFieldConfigs: FormField
   return formFields;
 }
 
+export function initializeFromFormData(formData: FormData, formFieldConfigs: FormFieldConfig[]) {
+  // Augment formFieldConfigs with FormData values.
+  Object.keys(formData).forEach((key) => {
+    const formFieldConfig = formFieldConfigs.find((ff) => ff.name === key);
+    if (formFieldConfig) {
+      const value = formData.get(key);
+      formFieldConfig.initValue = typeof value === 'string' ? value : undefined;
+    }
+  });
+}
+
 export function syncState(sourceFormFields: FormFields, destFormFieldConfigs: FormFieldConfig[]) {
   // Update formFieldConfigs with the result of the validations.
   destFormFieldConfigs.forEach((destFormFieldConfig) => {
