@@ -296,10 +296,9 @@ export function initializeFormFields<T = FormObject>(formFieldConfigs: FormField
 
 export function initializeFromFormData(formData: FormData, formFieldConfigs: FormFieldConfig[]) {
   // Augment formFieldConfigs with FormData values.
-  Object.keys(formData).forEach((key) => {
+  formData.forEach((value, key) => {
     const formFieldConfig = formFieldConfigs.find((ff) => ff.name === key);
     if (formFieldConfig) {
-      const value = formData.get(key);
       formFieldConfig.initValue = typeof value === 'string' ? value : undefined;
     }
   });
