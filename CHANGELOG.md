@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.7](https://github.com/cdeutsch/classy-forms/compare/v2.1.6...v2.1.7) (2022-04-15)
+
+Add `isInitError` which will maintain `initHasError` during the constructor.
+
+Otherwise if you set `initHasError` based on a server condition that isn't checked inside `isValid`, the error state will immediately be lost.
+
+This could be considered a breaking change since `initHasError` will behave different, but it's also a bug fix.
+
+
 ### [2.1.6](https://github.com/cdeutsch/classy-forms/compare/v2.1.5...v2.1.6) (2022-04-14)
 
 Fix bug with iterating over `FormData` keys.
