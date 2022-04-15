@@ -22,7 +22,8 @@ export type ErrorType =
   | 'maxLength'
   | 'minLength'
   | 'required'
-  | 'isValid';
+  | 'isValid'
+  | 'isInitError';
 
 export type DirtyMode = 'NotEqual' | 'OnChange';
 
