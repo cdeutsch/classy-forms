@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [2.1.7](https://github.com/cdeutsch/classy-forms/compare/v2.1.6...v2.1.7) (2022-04-15)
+## [3.0.0](https://github.com/cdeutsch/classy-forms/compare/v2.1.7...v3.0.0) (2022-04-15)
 
 Add `isInitError` which will maintain `initHasError` during the constructor.
 
