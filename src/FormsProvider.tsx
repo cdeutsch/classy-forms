@@ -42,7 +42,7 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
     const formFields = initializeFormFields(props.formFieldConfigs);
 
     // Always validate on initialization so that initValues are taken into account.
-    validateFormFields(formFields, props.formFieldConfigs, false);
+    validateFormFields(formFields, props.formFieldConfigs, false, undefined, true);
 
     // Augment FormFields with events (helpers).
     const formFieldsState: FormFieldsState = {} as any;
@@ -322,13 +322,17 @@ export function isValid(
   name: string,
   formFields: FormFields,
   formFieldConfigs: FormFieldConfig[],
-  submitting: boolean
+  submitting: boolean,
+  isInit?: boolean
 ): ErrorType[] {
   const formField = formFields[name];
   const formFieldConfig = getFormFieldConfig(name, formFieldConfigs);
 
   const errors: ErrorType[] = [];
 
+  if (isInit && formFieldConfig.initHasError) {
+    errors.push('isInitError');
+  }
   if (
     formFieldConfig.required &&
     (formField.dirty || submitting) &&
@@ -423,16 +427,18 @@ function validateAndDetectChanges(
   name: string,
   formFields: FormFields,
   formFieldConfigs: FormFieldConfig[],
-  submitting: boolean
+  submitting: boolean,
+  isInit?: boolean
 ): boolean {
   const formField = formFields[name];
   const formFieldConfig = getFormFieldConfig(name, formFieldConfigs);
 
   const wasValid = !formField.hasError;
 
-  const errors = isValid(name, formFields, formFieldConfigs, submitting);
+  const errors = isValid(name, formFields, formFieldConfigs, submitting, isInit);
   const valid = errors.length === 0;
   formField.hasError = !valid;
+
   // Always mark dirty once we have an error (usually this means the form was submitted)
   // Might have to rethink this if it causes problems, but currently if you try submit a form right away,
   //   then click in a required field and click out, the error clears onBlur which is a bit weird.
@@ -482,16 +488,18 @@ export function validateFormFields(
   formFields: FormFields,
   formFieldConfigs: FormFieldConfig[],
   submitting: boolean,
-  onlyName?: string
+  onlyName?: string,
+  isInit?: boolean
 ): ValidationResult {
   // Ideally we'd clone formFields so we're not modifying a state variable directly, outside setState; but
   // we can't because formFields contains functions.
   let stateModified = false;
   if (onlyName && formFields[onlyName]) {
-    stateModified = validateAndDetectChanges(onlyName, formFields, formFieldConfigs, submitting) || stateModified;
+    stateModified =
+      validateAndDetectChanges(onlyName, formFields, formFieldConfigs, submitting, isInit) || stateModified;
   } else {
     Object.keys(formFields).forEach((name) => {
-      stateModified = validateAndDetectChanges(name, formFields, formFieldConfigs, submitting) || stateModified;
+      stateModified = validateAndDetectChanges(name, formFields, formFieldConfigs, submitting, isInit) || stateModified;
     });
   }
 
