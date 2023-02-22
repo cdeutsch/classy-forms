@@ -109,6 +109,17 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
     return <FormsContext.Provider value={context}>{this.props.children}</FormsContext.Provider>;
   }
 
+  checkIsDirtyChange = (origIsDirty: boolean, formFields: FormFieldsState) => {
+    const { formFieldConfigs, onIsDirtyChange } = this.props;
+
+    if (onIsDirtyChange) {
+      const newIsDirty = calcIsDirty(formFields);
+      if (origIsDirty !== newIsDirty) {
+        onIsDirtyChange(newIsDirty, createFormFields<T>(formFieldConfigs, formFields) as any);
+      }
+    }
+  };
+
   onChangeValue = (name: string, value: Value) => {
     const { formFields } = this.state;
     const { formFieldConfigs, options } = this.props;
@@ -116,6 +127,8 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
 
     if (formField) {
       const formFieldConfig = getFormFieldConfig(name, formFieldConfigs);
+
+      const origIsDirty = this.isDirty();
 
       formField.value = value;
 
@@ -142,6 +155,8 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
       this.setState({
         formFields: formFields,
       });
+
+      this.checkIsDirtyChange(origIsDirty, formFields);
     }
   };
 
@@ -224,6 +239,8 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
     // Reset form fields to their original state.
     const { formFields } = this.state;
 
+    const origIsDirty = this.isDirty();
+
     Object.keys(formFields).forEach((name) => {
       const formField = formFields[name];
       const formFieldConfig = getFormFieldConfig(name, this.props.formFieldConfigs);
@@ -237,14 +254,20 @@ export class FormsProvider<T = FormObject> extends React.Component<FormsProvider
     this.setState({
       formFields: formFields,
     });
+
+    this.checkIsDirtyChange(origIsDirty, formFields);
   };
 
   isDirty = () => {
     const { formFields } = this.state;
 
     // The Form is consider `dirty` if any Field is `dirty`.
-    return Object.keys(formFields).some((name) => formFields[name].dirty);
+    return calcIsDirty(formFields);
   };
+}
+
+function calcIsDirty(formFields: FormFieldsState) {
+  return Object.keys(formFields).some((name) => formFields[name].dirty);
 }
 
 /**
