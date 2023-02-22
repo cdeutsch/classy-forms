@@ -134,6 +134,7 @@ export interface FormsProviderProps<T = FormObject> {
     reset: () => void,
     isDirty: () => boolean
   ): void;
+  onIsDirtyChange?(isDirty: boolean, formFields: FormFieldsWithEventHelpers<T>): void;
 }
 
 export interface FormsProviderState {
