@@ -27,10 +27,14 @@ This repo uses **Dependabot** for dependency PRs and **semantic-release** on the
 3. **`GITHUB_TOKEN`**  
    Workflows use the built-in `GITHUB_TOKEN`. No secret is required for it. Ensure *Settings → Actions → General* allows workflow **Read and write** permissions (needed to push the release commit and create releases).
 
+## Continuous integration
+
+The **[CI](.github/workflows/ci.yml)** workflow runs **`npm test`** and **`npm run build`** on **pull requests** and on **pushes to `master`**, so regressions are caught before or at merge time.
+
 ## How a release happens
 
 1. Push commits to **`master`** that follow [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `fix: ...`, `feat: ...`).
-2. The **Release** workflow runs tests and `npm run build`, then **semantic-release**:
+2. The **Release** workflow runs tests and `npm run build`, then **semantic-release** (the build step stays here because **`dist/`** is not committed and must exist for **`npm publish`**):
    - Decides the next **semver** from commits since the last release.
    - Updates **`package.json`**, **`CHANGELOG.md`**, and publishes to **npm**.
    - Creates a **Git tag** and **GitHub Release**.
