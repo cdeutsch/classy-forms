@@ -1,5 +1,5 @@
 # Publishes to npm and opens GitHub releases from Conventional Commits on the default branch.
-# Requires repository secrets: NPM_TOKEN (npm automation access token).
+# npm publish uses Trusted publishing (OIDC); configure the package on npmjs.com — see RELEASING.md.
 name: Release
 
 on:
@@ -11,6 +11,7 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
+  id-token: write
 
 jobs:
   release:
@@ -22,10 +23,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
+      # Trusted publishing: npm CLI ≥ 11.5.1 and Node ≥ 22.14.0 (see npm docs). @semantic-release/npm 13 aligns with that range.
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: '22.14'
           cache: npm
           registry-url: https://registry.npmjs.org
 
@@ -41,5 +43,4 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release

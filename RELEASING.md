@@ -7,11 +7,22 @@ This repo uses **Dependabot** for dependency PRs and **semantic-release** on the
 1. **Branch**  
    Releases are configured for **`master`**, which matches the current GitHub default. If you rename the default branch to **`main`**, update **`branches`** in both [`.github/workflows/release.yml`](.github/workflows/release.yml) and [`.releaserc.json`](.releaserc.json) to `main`.
 
-2. **npm token**  
-   - On [npmjs.com](https://www.npmjs.com/): *Access Tokens* → create an **Automation** token (classic) or granular token with publish rights for `classy-forms`.  
-   - On GitHub: repo *Settings → Secrets and variables → Actions* → **New repository secret**  
-     - Name: `NPM_TOKEN`  
-     - Value: the npm token  
+2. **npm Trusted publishing (recommended)**  
+   Publishes from CI use **[Trusted publishing](https://docs.npmjs.com/trusted-publishers)** (OpenID Connect) so you do **not** store a long-lived **`NPM_TOKEN`** in GitHub. Requirements are described in the npm docs ([Node **≥ 22.14.0** and npm CLI **≥ 11.5.1**](https://docs.npmjs.com/trusted-publishers)); this repo’s workflow uses **Node 22.14** on **GitHub-hosted** `ubuntu-latest`.
+
+   **On npmjs.com** (package → **Settings** → **Trusted publishing**):
+
+   - Publisher: **GitHub Actions**
+   - **Organization or user:** match the GitHub owner (e.g. `cdeutsch` for `github.com/cdeutsch/classy-forms`)
+   - **Repository:** `classy-forms`
+   - **Workflow filename:** `release.yml` (filename only, including `.yml`, must match [`.github/workflows/release.yml`](.github/workflows/release.yml) exactly)
+   - **Environment name:** leave empty unless you intentionally use a [GitHub Environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment) named in npm; if you set one on npm, configure the same on the workflow job.
+
+   **On GitHub:** the workflow already declares **`id-token: write`** (required for OIDC). No **`NPM_TOKEN`** secret is used.
+
+   After a successful release via this workflow, you can remove any old automation tokens and optionally tighten package **[Publishing access](https://docs.npmjs.com/trusted-publishers#recommended-restrict-token-access-when-using-trusted-publishers)** so publishes go through Trusted publishing only.
+
+   **Fallback (unsupported CI only):** If you ever publish from a context where Trusted publishing is unavailable, use a short-lived **[granular access token](https://docs.npmjs.com/creating-and-viewing-access-tokens)** and set **`NPM_TOKEN`** for that job only — not the default for this repo.
 
 3. **`GITHUB_TOKEN`**  
    Workflows use the built-in `GITHUB_TOKEN`. No secret is required for it. Ensure *Settings → Actions → General* allows workflow **Read and write** permissions (needed to push the release commit and create releases).
