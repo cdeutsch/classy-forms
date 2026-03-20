@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -14,7 +14,7 @@ describe('ClassyForm', () => {
     const user = userEvent.setup();
     const onSubmit = jest.fn();
 
-    const { container } = render(
+    render(
       <ClassyForm<DemoForm>
         formFieldConfigs={[{ name: 'title', required: true }]}
         onSubmit={onSubmit}
@@ -34,7 +34,7 @@ describe('ClassyForm', () => {
     );
 
     await user.type(screen.getByLabelText('Title'), 'My title');
-    fireEvent.submit(container.querySelector('form')!);
+    await user.click(screen.getByRole('button', { name: 'Save' }));
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
     const [event, submittedFields] = onSubmit.mock.calls[0];
@@ -42,10 +42,11 @@ describe('ClassyForm', () => {
     expect(submittedFields.title.value).toBe('My title');
   });
 
-  it('prevents submit when invalid (required empty)', () => {
+  it('prevents submit when invalid (required empty)', async () => {
+    const user = userEvent.setup();
     const onSubmit = jest.fn();
 
-    const { container } = render(
+    render(
       <ClassyForm<DemoForm>
         formFieldConfigs={[{ name: 'title', required: true }]}
         onSubmit={onSubmit}
@@ -60,7 +61,7 @@ describe('ClassyForm', () => {
       </ClassyForm>
     );
 
-    fireEvent.submit(container.querySelector('form')!);
+    await user.click(screen.getByRole('button', { name: 'Save' }));
 
     expect(onSubmit).not.toHaveBeenCalled();
   });

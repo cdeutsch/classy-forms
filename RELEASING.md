@@ -52,7 +52,7 @@ If there is **no** user-facing change that matches your configured rules (for ex
 
 ### Dependabot
 
-[Dependabot](.github/dependabot.yml) opens PRs monthly for npm (root and `demo/`) and GitHub Actions. PR titles use **`fix(deps):`** so merged dependency updates typically produce a **patch** release when you merge to **`master`**.
+[Dependabot](.github/dependabot.yml) opens PRs monthly for npm (root and `demo/`) and GitHub Actions. PR titles use **`fix(deps):`**, which matches the default **semantic-release** analyzer for a **patch** bump only when that title survives as the **final commit subject** on **`master`** (for example via **squash** or **rebase** merge). GitHub’s default **merge commit** message (**`Merge pull request #…`**) does **not** follow Conventional Commits, so those merges usually **do not** produce a patch release from the PR title alone.
 
 ## Local dry run (optional)
 

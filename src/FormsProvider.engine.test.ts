@@ -63,12 +63,19 @@ describe('FormsProvider engine helpers', () => {
       expect(formFields.title.errors).toContain('required');
     });
 
-    it('reports allValid when field satisfies required', () => {
+    it('clears invalid state on the same FormFields when value becomes valid', () => {
       const configs: FormFieldConfig[] = [{ name: 'title', required: true }];
       const formFields: FormFields = initializeFormFields(configs);
+      formFields.title.value = '';
+      const invalidResult = validateFormFields(formFields, configs, true);
+      expect(invalidResult.allValid).toBe(false);
+      expect(formFields.title.hasError).toBe(true);
+      expect(formFields.title.errors).toContain('required');
+
       formFields.title.value = 'hello';
-      const result = validateFormFields(formFields, configs, true);
-      expect(result.allValid).toBe(true);
+      const validResult = validateFormFields(formFields, configs, true);
+      expect(validResult.allValid).toBe(true);
+      expect(formFields.title.errors).toEqual([]);
       expect(formFields.title.hasError).toBe(false);
     });
   });

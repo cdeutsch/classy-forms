@@ -9,6 +9,16 @@ import babel from '@rollup/plugin-babel';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf8'));
 
+function assertOutputField(value, fieldName) {
+  if (typeof value !== 'string' || value.trim() === '') {
+    throw new Error(
+      `package.json "${fieldName}" must be a non-empty string (Rollup writes CJS/ESM outputs to main and module).`
+    );
+  }
+}
+assertOutputField(pkg.main, 'main');
+assertOutputField(pkg.module, 'module');
+
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 export default {
