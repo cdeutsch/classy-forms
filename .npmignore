@@ -18,4 +18,6 @@ coverage
 demo
 import-sorter.json
 jest.config.js
+.releaserc.json
+RELEASING.md
 
