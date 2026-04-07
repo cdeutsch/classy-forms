@@ -11,6 +11,7 @@ interface UserFormFields {
   firstName: string;
   lastName: string;
   email: string;
+  tShirtSize: string;
 }
 
 function getErrorText(formField: FormField, formFields: FormFields, submitting?: boolean) {
@@ -19,6 +20,8 @@ function getErrorText(formField: FormField, formFields: FormFields, submitting?:
       return 'Required';
     case 'isEmail':
       return 'Invalid email';
+    case 'isOneOf':
+      return 'Must be small, medium, or large';
   }
 }
 
@@ -42,6 +45,13 @@ const formFieldConfigs: FormFieldConfig[] = [
     isEmail: true,
     getHelperText: getErrorText,
   },
+  {
+    name: 'tShirtSize',
+    label: 'T-shirt size',
+    required: true,
+    isOneOf: ['small', 'medium', 'large'],
+    getHelperText: getErrorText,
+  },
 ];
 
 export class Home extends React.Component {
@@ -49,7 +59,10 @@ export class Home extends React.Component {
     return (
       <Page>
         <ClassyForm formFieldConfigs={formFieldConfigs}>
-          {({ formFields: { email, firstName, lastName }, onSubmit }: FormsContextContext<UserFormFields>) => {
+          {({
+            formFields: { email, firstName, lastName, tshirtSize },
+            onSubmit,
+          }: FormsContextContext<UserFormFields>) => {
             return (
               <React.Fragment>
                 <FormInput key={firstName.name} formField={firstName} />
@@ -57,6 +70,13 @@ export class Home extends React.Component {
                 <FormInput key={lastName.name} formField={lastName} />
 
                 <FormInput key={email.name} formField={email} />
+
+                <FormInput
+                  key={tshirtSize.name}
+                  formField={tshirtSize}
+                  autoComplete="off"
+                  placeholder="small, medium, or large"
+                />
 
                 <div className="form-actions">
                   <Button variant="contained" color="primary" type="submit">

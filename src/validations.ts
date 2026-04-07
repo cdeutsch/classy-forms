@@ -95,4 +95,7 @@ export const validations = {
   minLength(formField: FormField, formFields: FormFields, submitting: boolean, length: number) {
     return !isExisty(formField.value) || isEmpty(formField.value) || formField.value.length >= length;
   },
+  isOneOf(formField: FormField, formFields: FormFields, submitting: boolean, allowedValues: Value[]) {
+    return !isExisty(formField.value) || isEmpty(formField.value) || allowedValues.includes(formField.value);
+  },
 };
