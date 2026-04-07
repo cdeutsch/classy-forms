@@ -59,7 +59,7 @@
     "react-dom": "^17.0.2",
     "rollup": "^4.59.0",
     "semantic-release": "^24.2.0",
-    "trash-cli": "^4.0.0",
+    "trash-cli": "^7.2.0",
     "ts-jest": "^29.2.5",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
