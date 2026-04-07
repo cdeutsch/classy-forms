@@ -1,0 +1,50 @@
+# Publishes to npm and opens GitHub releases from Conventional Commits on the default branch.
+# npm publish uses Trusted publishing (OIDC); configure the package on npmjs.com — see RELEASING.md.
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      # Trusted publishing: npm CLI ≥ 11.5.1 and Node ≥ 22.14.0 (see npm docs). @semantic-release/npm 13 aligns with that range.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14'
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      # After Node.js setup above: Trusted publishing requires npm CLI ≥ 11.5.1 (see RELEASING.md / npm docs).
+      - name: Ensure npm CLI for Trusted publishing (≥11.5.1)
+        run: npm install -g npm@^11.5.1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
