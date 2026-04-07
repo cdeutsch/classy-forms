@@ -1,4 +1,4 @@
-# Runs tests and build on every PR and on pushes to master (including merge commits).
+# Runs lint, tests, and build on every PR and on pushes to master (including merge commits).
 name: CI
 
 on:
@@ -22,5 +22,6 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - run: npm run lint
       - run: npm test
       - run: npm run build
