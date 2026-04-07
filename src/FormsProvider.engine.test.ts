@@ -1,13 +1,10 @@
-import type { FormFieldConfig, FormFields } from './interfaces';
 import { getFormFieldConfig, initializeFormFields, isValid, validateFormFields } from './FormsProvider';
+import type { FormFieldConfig, FormFields } from './interfaces';
 
 describe('FormsProvider engine helpers', () => {
   describe('initializeFormFields', () => {
     it('creates a field per config with default init value', () => {
-      const configs: FormFieldConfig[] = [
-        { name: 'email', initValue: 'a@b.co' },
-        { name: 'note' },
-      ];
+      const configs: FormFieldConfig[] = [{ name: 'email', initValue: 'a@b.co' }, { name: 'note' }];
       const fields = initializeFormFields(configs);
       expect(fields.email.value).toBe('a@b.co');
       expect(fields.note.value).toBe('');

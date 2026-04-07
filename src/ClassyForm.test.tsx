@@ -15,18 +15,11 @@ describe('ClassyForm', () => {
     const onSubmit = jest.fn();
 
     render(
-      <ClassyForm<DemoForm>
-        formFieldConfigs={[{ name: 'title', required: true }]}
-        onSubmit={onSubmit}
-      >
+      <ClassyForm<DemoForm> formFieldConfigs={[{ name: 'title', required: true }]} onSubmit={onSubmit}>
         {({ formFields }) => (
           <>
             <label htmlFor="title">Title</label>
-            <input
-              id="title"
-              value={formFields.title.value as string}
-              onChange={formFields.title.onChange}
-            />
+            <input id="title" value={formFields.title.value as string} onChange={formFields.title.onChange} />
             <button type="submit">Save</button>
           </>
         )}
@@ -47,10 +40,7 @@ describe('ClassyForm', () => {
     const onSubmit = jest.fn();
 
     render(
-      <ClassyForm<DemoForm>
-        formFieldConfigs={[{ name: 'title', required: true }]}
-        onSubmit={onSubmit}
-      >
+      <ClassyForm<DemoForm> formFieldConfigs={[{ name: 'title', required: true }]} onSubmit={onSubmit}>
         {({ formFields }) => (
           <>
             <label htmlFor="title">Title</label>
@@ -71,10 +61,7 @@ describe('ClassyForm', () => {
     const onSubmit = jest.fn();
 
     render(
-      <ClassyForm<DemoForm>
-        formFieldConfigs={[{ name: 'title', initValue: 'original' }]}
-        onSubmit={onSubmit}
-      >
+      <ClassyForm<DemoForm> formFieldConfigs={[{ name: 'title', initValue: 'original' }]} onSubmit={onSubmit}>
         {({ formFields, reset }) => (
           <>
             <label htmlFor="title">Title</label>

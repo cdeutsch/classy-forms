@@ -1,8 +1,6 @@
 import type { FormField, FormFields } from './interfaces';
 import { validations } from './validations';
 
-const emptyFormFields = {} as FormFields;
-
 function field(value: unknown, overrides: Partial<FormField> = {}): FormField {
   return {
     value,
@@ -14,6 +12,12 @@ function field(value: unknown, overrides: Partial<FormField> = {}): FormField {
 }
 
 describe('validations', () => {
+  let emptyFormFields: FormFields;
+
+  beforeEach(() => {
+    emptyFormFields = {};
+  });
+
   describe('isDefaultRequiredValue', () => {
     it('is true for undefined, null, and empty string', () => {
       expect(validations.isDefaultRequiredValue(field(undefined), emptyFormFields, false)).toBe(true);
@@ -84,7 +88,7 @@ describe('validations', () => {
       const formFields: FormFields = {
         a: field('one'),
         b: field('one'),
-      } as FormFields;
+      };
       expect(validations.equalsField(formFields.a, formFields, false, 'b')).toBe(true);
       formFields.b.value = 'other';
       expect(validations.equalsField(formFields.a, formFields, false, 'b')).toBe(false);
