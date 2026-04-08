@@ -21,14 +21,16 @@
     "lint:prettier": "prettier \"src/**/*.{ts,tsx}\" --list-different",
     "watch": "rollup -cw",
     "test": "NODE_ENV=test jest",
-    "clean": "trash dist"
+    "clean": "trash dist",
+    "release:dry-run": "semantic-release --dry-run"
   },
   "scripts-info": {
     "describe": "Display information about the package scripts",
     "build": "Clean and rebuild the project",
     "fix": "Try to automatically fix any linting problems",
     "lint": "Lint the project",
-    "watch": "Watch and rebuild the project on save"
+    "watch": "Watch and rebuild the project on save",
+    "release:dry-run": "Preview the next semantic-release version and notes without publishing"
   },
   "engines": {
     "node": ">=22.14.0"
