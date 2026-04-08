@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           persist-credentials: true
@@ -44,7 +44,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Clear placeholder NODE_AUTH_TOKEN from setup-node so npm publish uses Trusted publishing (OIDC), not a dummy token.
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ""
         run: npx semantic-release
