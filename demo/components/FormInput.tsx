@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { red } from '@material-ui/core/colors';
+import { red } from '@mui/material/colors';
 import { FormFieldAndEventHelpers } from 'classy-forms';
 import React from 'react';
 

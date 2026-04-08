@@ -1,36 +1,29 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { StylesProvider, ThemeProvider } from '@material-ui/styles';
-import App from 'next/app';
+import { CacheProvider, type EmotionCache } from '@emotion/react';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import React from 'react';
 
+import createEmotionCache from '../lib/createEmotionCache';
 import { theme } from '../components/theme';
 
-export default class MyApp extends App {
-  componentDidMount() {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentNode.removeChild(jssStyles);
-    }
-  }
+const clientSideEmotionCache = createEmotionCache();
 
-  render() {
-    const { Component, pageProps } = this.props;
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+}
 
-    return (
-      <React.Fragment>
-        <Head>
-          <title>Demo Site</title>
-        </Head>
-        <StylesProvider injectFirst>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </StylesProvider>
-      </React.Fragment>
-    );
-  }
+export default function MyApp({ Component, pageProps, emotionCache = clientSideEmotionCache }: MyAppProps) {
+  return (
+    <CacheProvider value={emotionCache}>
+      <Head>
+        <title>Demo Site</title>
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </CacheProvider>
+  );
 }
