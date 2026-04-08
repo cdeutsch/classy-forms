@@ -1,8 +1,7 @@
-import { indigo, red } from '@material-ui/core/colors';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { indigo, red } from '@mui/material/colors';
+import { createTheme } from '@mui/material/styles';
 
-// Create a theme instance.
-export const theme = createMuiTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: '#000',
