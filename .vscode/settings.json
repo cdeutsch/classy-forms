@@ -17,7 +17,7 @@
     "static": true, // static is generated output so ignore
     "dist": true,
     ".cache-loader": true,
-    "demo": true, // this is its own project and it's recommended to open in a separate editor
+    "demo": true // this is its own project and it's recommended to open in a separate editor
   },
   "[javascript]": {
     "editor.formatOnSave": true
@@ -35,7 +35,8 @@
   "vsicons.associations.folders": [
     { "icon": "log", "format": "svg", "disabled": true },
     { "icon": "notification", "format": "svg", "disabled": true },
-    { "icon": "config",
+    {
+      "icon": "config",
       "extensions": [
         "config",
         ".config",
@@ -51,29 +52,13 @@
         "ini",
         ".ini",
         "initializers",
-        ".initializers",
+        ".initializers"
       ],
       "format": "svg",
       "overrides": "config"
     }
   ],
   // Specify paths/files to ignore.
-  "cSpell.ignorePaths": [
-    "*.d.ts",
-    "*.json",
-    "**/*.svg",
-    "**/.vscode/**",
-    ".prettierrc",
-    "tsconfig.json"
-  ],
-  "cSpell.words": [
-    "Existy",
-    "Serializers",
-    "accum",
-    "cdeutsch",
-    "cyclomatic",
-    "formsy",
-    "passthrough",
-    "polyfill"
-  ],
+  "cSpell.ignorePaths": ["*.d.ts", "*.json", "**/*.svg", "**/.vscode/**", ".prettierrc", "tsconfig.json"],
+  "cSpell.words": ["Existy", "Serializers", "accum", "cdeutsch", "cyclomatic", "formsy", "passthrough", "polyfill"]
 }
