@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/cdeutsch/classy-forms/compare/v3.1.2...v3.2.0) (2026-04-08)
+
+
+### Features
+
+* **pencil:** Upgrade all NPMs ([fc0ed5a](https://github.com/cdeutsch/classy-forms/commit/fc0ed5a356b210de388f32035aa61d253ce63914))
+
 ## [3.1.2](https://github.com/cdeutsch/classy-forms/compare/v3.1.1...v3.1.2) (2026-04-08)
 
 
