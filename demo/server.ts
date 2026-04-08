@@ -29,8 +29,8 @@ void nextApp.prepare().then(() => {
     })
   );
 
-  app.all('*', async (req, res) => {
-    return nextRequestHandler(req, res);
+  app.use((req, res) => {
+    void nextRequestHandler(req, res);
   });
 
   app.listen(port, () => {

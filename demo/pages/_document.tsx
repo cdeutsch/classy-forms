@@ -1,6 +1,6 @@
 import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
-import Document, { Html, Head, Main, NextScript, type DocumentContext } from 'next/document';
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
 
 import createEmotionCache from '../lib/createEmotionCache';
@@ -36,10 +36,13 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      enhanceApp: (App: any) =>
+      enhanceApp: (App: React.ComponentType<any>) =>
         function EnhancedApp(props) {
-          return <CacheProvider value={cache}><App {...props} /></CacheProvider>;
+          return (
+            <CacheProvider value={cache}>
+              <App {...props} />
+            </CacheProvider>
+          );
         },
     });
 
