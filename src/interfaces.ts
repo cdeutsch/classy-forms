@@ -1,3 +1,5 @@
+import type * as React from 'react';
+
 export type Value = any;
 
 export type ErrorType =
@@ -125,6 +127,7 @@ export type FormFieldsWithHelpers<T = FormObject> = Record<Extract<keyof T, stri
 export type FormFieldsWithEventHelpers<T = FormObject> = Record<Extract<keyof T, string>, FormFieldAndEventHelpers>;
 
 export interface FormsProviderProps<T = FormObject> {
+  children?: React.ReactNode;
   formKey?: string | number;
   formFieldConfigs: FormFieldConfig[];
   options?: FormOptions;

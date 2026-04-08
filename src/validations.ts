@@ -12,19 +12,19 @@ const isExisty = (value: Value) => value !== null && value !== undefined;
 const isEmpty = (value: Value) => value === '';
 
 export const validations = {
-  isDefaultRequiredValue(formField: FormField, formFields: FormFields, submitting: boolean) {
+  isDefaultRequiredValue(formField: FormField, _formFields: FormFields, _submitting: boolean) {
     return formField.value === undefined || formField.value === null || formField.value === '';
   },
-  isExisty(formField: FormField, formFields: FormFields, submitting: boolean) {
+  isExisty(formField: FormField, _formFields: FormFields, _submitting: boolean) {
     return isExisty(formField.value);
   },
-  matchRegexp(formField: FormField, formFields: FormFields, submitting: boolean, regexp: RegExp) {
+  matchRegexp(formField: FormField, _formFields: FormFields, _submitting: boolean, regexp: RegExp) {
     return !isExisty(formField.value) || isEmpty(formField.value) || regexp.test(formField.value);
   },
-  isUndefined(formField: FormField, formFields: FormFields, submitting: boolean) {
+  isUndefined(formField: FormField, _formFields: FormFields, _submitting: boolean) {
     return formField.value === undefined;
   },
-  isEmptyString(formField: FormField, formFields: FormFields, submitting: boolean) {
+  isEmptyString(formField: FormField, _formFields: FormFields, _submitting: boolean) {
     return isEmpty(formField.value);
   },
   isEmail(formField: FormField, formFields: FormFields, submitting: boolean) {
@@ -44,10 +44,10 @@ export const validations = {
       /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/i
     );
   },
-  isTrue(formField: FormField, formFields: FormFields, submitting: boolean) {
+  isTrue(formField: FormField, _formFields: FormFields, _submitting: boolean) {
     return formField.value === true;
   },
-  isFalse(formField: FormField, formFields: FormFields, submitting: boolean) {
+  isFalse(formField: FormField, _formFields: FormFields, _submitting: boolean) {
     return formField.value === false;
   },
   isNumeric(formField: FormField, formFields: FormFields, submitting: boolean) {

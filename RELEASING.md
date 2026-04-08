@@ -56,6 +56,8 @@ If there is **no** user-facing change that matches your configured rules (for ex
 
 ## Local dry run (optional)
 
+Use **Node ^22.14.0** or **≥24.10.0** locally (same range as **semantic-release** 25 and Trusted publishing). Older 22.x patch levels may show `EBADENGINE` warnings from npm even though install succeeds.
+
 ```bash
 npm ci
 git fetch origin

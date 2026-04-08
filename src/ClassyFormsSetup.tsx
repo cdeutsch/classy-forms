@@ -3,7 +3,7 @@ import React from 'react';
 import { FormsConsumer, FormsProvider } from './FormsProvider';
 import { FormObject, FormsContextContext, FormsProviderProps } from './interfaces';
 
-export interface ClassyFormsSetupProps<T = FormObject> extends FormsProviderProps<T> {
+export interface ClassyFormsSetupProps<T = FormObject> extends Omit<FormsProviderProps<T>, 'children'> {
   children(props: FormsContextContext): React.ReactElement | null;
 }
 
