@@ -1,11 +1,6 @@
-const webpack = require('webpack');
-
+/** @type {import('next').NextConfig} */
 module.exports = {
-  webpack: (config, { dev, isServer }) => {
-    if (process.env.ANALYZE) {
-      config.plugins.push(new WebpackBundleSizeAnalyzerPlugin('stats.txt'));
-    }
-
-    return config;
-  }
-}
+  compiler: {
+    emotion: true,
+  },
+};

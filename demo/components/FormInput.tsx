@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import { red } from '@material-ui/core/colors';
 import { FormFieldAndEventHelpers } from 'classy-forms';
 import React from 'react';
@@ -57,8 +57,10 @@ const errorCss = css`
   }
 `;
 
-export interface FormInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'name' | 'required' | 'value' | 'onBlur' | 'onChange'> {
+export interface FormInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'name' | 'required' | 'value' | 'onBlur' | 'onChange'
+> {
   formField: FormFieldAndEventHelpers;
 }
 
@@ -78,7 +80,6 @@ export class FormInput extends React.Component<FormInputProps> {
           {required ? <abbr title="required">*</abbr> : null}
           {label}
         </label>
-        {/* tslint:disable-next-line: react-a11y-input-elements */}
         <input
           autoCapitalize="off"
           autoCorrect="off"

@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx } from '@emotion/react';
 import { Button } from '@material-ui/core';
 import { ClassyForm, FormField, FormFieldConfig, FormFields, FormsContextContext } from 'classy-forms';
 import React from 'react';
@@ -13,7 +12,7 @@ interface UserFormFields {
   email: string;
 }
 
-function getErrorText(formField: FormField, formFields: FormFields, submitting?: boolean) {
+function getErrorText(formField: FormField, _formFields: FormFields, _submitting?: boolean) {
   switch (formField.errors[0]) {
     case 'required':
       return 'Required';
@@ -49,7 +48,7 @@ export class Home extends React.Component {
     return (
       <Page>
         <ClassyForm formFieldConfigs={formFieldConfigs}>
-          {({ formFields: { email, firstName, lastName }, onSubmit }: FormsContextContext<UserFormFields>) => {
+          {({ formFields: { email, firstName, lastName } }: FormsContextContext<UserFormFields>) => {
             return (
               <React.Fragment>
                 <FormInput key={firstName.name} formField={firstName} />
@@ -72,5 +71,4 @@ export class Home extends React.Component {
   }
 }
 
-// tslint:disable-next-line: export-name no-default-export
 export default Home;
