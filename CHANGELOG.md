@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/cdeutsch/classy-forms/compare/v3.1.1...v3.1.2) (2026-04-08)
+
+
+### Bug Fixes
+
+* **deps:** bump rollup from 4.59.0 to 4.60.1 ([97d6772](https://github.com/cdeutsch/classy-forms/commit/97d6772e4888aacb6625f89157914fdab7eeeb41))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
