@@ -1,4 +1,3 @@
-// tslint:disable: no-console
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -12,8 +11,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev, quiet: false });
 const nextRequestHandler = nextApp.getRequestHandler();
 
-// tslint:disable-next-line: no-floating-promises
-nextApp.prepare().then(() => {
+void nextApp.prepare().then(() => {
   const app = express();
 
   if (!dev) {

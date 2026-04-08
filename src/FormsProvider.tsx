@@ -23,7 +23,7 @@ export const FormsContext = React.createContext<FormsContextContext>({
   onSubmit: () => {},
   // tslint:disable-next-line: no-empty
   reset: () => {},
-  validate: (submitting: boolean): ValidationResult => {
+  validate: (_submitting: boolean): ValidationResult => {
     return { allValid: true, stateModified: false };
   },
   // tslint:disable-next-line: no-empty

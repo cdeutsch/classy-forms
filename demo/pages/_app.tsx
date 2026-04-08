@@ -6,7 +6,6 @@ import React from 'react';
 
 import { theme } from '../components/theme';
 
-// tslint:disable-next-line: export-name no-default-export
 export default class MyApp extends App {
   componentDidMount() {
     // Remove the server-side injected CSS.

@@ -25,6 +25,7 @@
     "noUnusedParameters": false /* Report errors on unused parameters. */,
     "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
     "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
+    "skipLibCheck": true,
 
     /* Debugging Options */
     "traceResolution": false /* Report module resolution log messages. */,
@@ -40,6 +41,14 @@
     "typeRoots": ["node_modules/@types"]
   },
   "include": ["src"],
-  "exclude": ["node_modules", "build", "dist", "demo"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "demo",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "src/setupTests.ts"
+  ],
   "compileOnSave": false
 }
