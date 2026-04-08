@@ -21,6 +21,7 @@ export type ErrorType =
   | 'matchRegexp'
   | 'maxLength'
   | 'minLength'
+  | 'isOneOf'
   | 'required'
   | 'isValid'
   | 'isInitError';
@@ -83,6 +84,7 @@ export interface FormFieldConfig {
   matchRegexp?: RegExp;
   maxLength?: number;
   minLength?: number;
+  isOneOf?: Value[];
 
   isValid?(formField: FormField, formFields: FormFields, submitting?: boolean): boolean;
   getHelperText?(formField: FormField, formFields: FormFields, submitting?: boolean): string | undefined;
