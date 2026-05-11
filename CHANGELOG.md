@@ -1,3 +1,10 @@
+## [3.2.2](https://github.com/cdeutsch/classy-forms/compare/v3.2.1...v3.2.2) (2026-05-11)
+
+
+### Bug Fixes
+
+* **deps:** bump @babel/plugin-transform-modules-systemjs ([61b2918](https://github.com/cdeutsch/classy-forms/commit/61b29189ecf8dcfc44a40827cfda8bf5eeb6f205))
+
 ## [3.2.1](https://github.com/cdeutsch/classy-forms/compare/v3.2.0...v3.2.1) (2026-04-13)
 
 
