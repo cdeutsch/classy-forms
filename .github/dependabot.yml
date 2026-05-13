@@ -5,6 +5,13 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-major'
     open-pull-requests-limit: 10
     commit-message:
       prefix: fix(deps)
@@ -13,6 +20,13 @@ updates:
     directory: /demo
     schedule:
       interval: monthly
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          - 'version-update:semver-major'
     open-pull-requests-limit: 5
     commit-message:
       prefix: fix(deps)
