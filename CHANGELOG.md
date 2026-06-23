@@ -1,3 +1,10 @@
+## [3.2.5](https://github.com/cdeutsch/classy-forms/compare/v3.2.4...v3.2.5) (2026-06-23)
+
+
+### Bug Fixes
+
+* **deps:** bump js-yaml from 4.1.1 to 4.2.0 in /demo ([0a5ddc2](https://github.com/cdeutsch/classy-forms/commit/0a5ddc201dbdff7b0023f76029e89b8de0ee75d5))
+
 ## [3.2.4](https://github.com/cdeutsch/classy-forms/compare/v3.2.3...v3.2.4) (2026-06-23)
 
 
