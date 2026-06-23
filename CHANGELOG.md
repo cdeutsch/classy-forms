@@ -1,3 +1,10 @@
+## [3.2.4](https://github.com/cdeutsch/classy-forms/compare/v3.2.3...v3.2.4) (2026-06-23)
+
+
+### Bug Fixes
+
+* **deps:** bump tar and npm ([9a6fede](https://github.com/cdeutsch/classy-forms/commit/9a6fede1a04afaff4712ac01b3bf535c3039195f))
+
 ## [3.2.3](https://github.com/cdeutsch/classy-forms/compare/v3.2.2...v3.2.3) (2026-06-10)
 
 
