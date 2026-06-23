@@ -1,3 +1,10 @@
+## [3.2.6](https://github.com/cdeutsch/classy-forms/compare/v3.2.5...v3.2.6) (2026-06-23)
+
+
+### Bug Fixes
+
+* **deps:** bump @babel/core from 7.29.0 to 7.29.6 ([bd92926](https://github.com/cdeutsch/classy-forms/commit/bd929267f657ade4253786942ff44aba156f6175))
+
 ## [3.2.5](https://github.com/cdeutsch/classy-forms/compare/v3.2.4...v3.2.5) (2026-06-23)
 
 
