@@ -1,3 +1,10 @@
+## [3.2.7](https://github.com/cdeutsch/classy-forms/compare/v3.2.6...v3.2.7) (2026-07-17)
+
+
+### Bug Fixes
+
+* **deps:** bump ws from 8.20.0 to 8.21.1 ([c02418a](https://github.com/cdeutsch/classy-forms/commit/c02418acd9f4b4ab9742a935a648f1a39ab38f8e))
+
 ## [3.2.6](https://github.com/cdeutsch/classy-forms/compare/v3.2.5...v3.2.6) (2026-06-23)
 
 
