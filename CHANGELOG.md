@@ -1,3 +1,10 @@
+## [3.2.10](https://github.com/cdeutsch/classy-forms/compare/v3.2.9...v3.2.10) (2026-07-27)
+
+
+### Bug Fixes
+
+* **deps:** bump undici from 6.26.0 to 7.29.0 ([91accfc](https://github.com/cdeutsch/classy-forms/commit/91accfc291e54eb97f5f8fedf4d1efc4301fb6d7))
+
 ## [3.2.9](https://github.com/cdeutsch/classy-forms/compare/v3.2.8...v3.2.9) (2026-07-27)
 
 
