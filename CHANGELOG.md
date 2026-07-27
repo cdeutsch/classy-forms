@@ -1,3 +1,10 @@
+## [3.2.8](https://github.com/cdeutsch/classy-forms/compare/v3.2.7...v3.2.8) (2026-07-27)
+
+
+### Bug Fixes
+
+* **deps:** bump shell-quote from 1.8.4 to 1.10.0 ([c69952d](https://github.com/cdeutsch/classy-forms/commit/c69952d74c41f0698c3b5d6f34e50915d7171f3b))
+
 ## [3.2.7](https://github.com/cdeutsch/classy-forms/compare/v3.2.6...v3.2.7) (2026-07-17)
 
 
