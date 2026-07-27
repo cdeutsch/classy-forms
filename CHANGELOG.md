@@ -1,3 +1,10 @@
+## [3.2.9](https://github.com/cdeutsch/classy-forms/compare/v3.2.8...v3.2.9) (2026-07-27)
+
+
+### Bug Fixes
+
+* **deps:** bump next from 16.2.10 to 16.2.11 in /demo ([bbb9add](https://github.com/cdeutsch/classy-forms/commit/bbb9add65c1e870cdd5fa7e0e2171b6e5a31af7a))
+
 ## [3.2.8](https://github.com/cdeutsch/classy-forms/compare/v3.2.7...v3.2.8) (2026-07-27)
 
 
