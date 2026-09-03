@@ -1,3 +1,10 @@
+## [3.2.14](https://github.com/cdeutsch/classy-forms/compare/v3.2.13...v3.2.14) (2026-09-03)
+
+
+### Bug Fixes
+
+* **deps:** bump postcss and next in /demo ([def7dd9](https://github.com/cdeutsch/classy-forms/commit/def7dd9dbe871521e322922cdf1543a9283aa2f3))
+
 ## [3.2.13](https://github.com/cdeutsch/classy-forms/compare/v3.2.12...v3.2.13) (2026-09-03)
 
 
