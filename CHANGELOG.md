@@ -1,3 +1,10 @@
+## [3.2.12](https://github.com/cdeutsch/classy-forms/compare/v3.2.11...v3.2.12) (2026-09-03)
+
+
+### Bug Fixes
+
+* **deps:** bump nanoid from 3.3.11 to 3.3.18 in /demo ([af18995](https://github.com/cdeutsch/classy-forms/commit/af189952bd424e50397609f7ed6cffac89e2f1b3))
+
 ## [3.2.11](https://github.com/cdeutsch/classy-forms/compare/v3.2.10...v3.2.11) (2026-07-27)
 
 
