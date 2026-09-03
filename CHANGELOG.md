@@ -1,3 +1,18 @@
+## [3.2.15](https://github.com/cdeutsch/classy-forms/compare/v3.2.14...v3.2.15) (2026-09-03)
+
+
+### Bug Fixes
+
+* **deps:** bump @testing-library/user-event from 14.6.1 to 14.6.6 ([1f7c1e3](https://github.com/cdeutsch/classy-forms/commit/1f7c1e31452f9a01b969cdc6c83037802faf2ad8))
+* **deps:** bump demo dependencies (eslint, prettier, react, react-dom, typescript-eslint, and resolve transitive vulnerabilities) ([a8aead7](https://github.com/cdeutsch/classy-forms/commit/a8aead731859d511725533132621d904ee12abaa))
+* **deps:** bump eslint from 9.39.4 to 9.39.5 and @eslint/js from 9.39.4 to 9.39.5 ([4aa86ba](https://github.com/cdeutsch/classy-forms/commit/4aa86baac3eeef7ca09fea622a0a61e1996ef678))
+* **deps:** bump prettier from 3.9.5 to 3.9.6 ([4c6b759](https://github.com/cdeutsch/classy-forms/commit/4c6b759bcfe0240a7eeccec619071ab19b70222d))
+* **deps:** bump rollup from 4.62.2 to 4.62.5 ([710c924](https://github.com/cdeutsch/classy-forms/commit/710c924bc00ad2589a2ef335071da30fa52e9ff6))
+* **deps:** bump semantic-release from 25.0.5 to 25.0.9 ([43df886](https://github.com/cdeutsch/classy-forms/commit/43df8865b3e612510674cd16dcd565894a7e1764))
+* **deps:** bump ts-jest from 29.4.11 to 29.4.12 ([c4c7a5b](https://github.com/cdeutsch/classy-forms/commit/c4c7a5b3046dd66bfcafe080150e9a2cd335721a))
+* **deps:** bump typescript-eslint from 8.63.0 to 8.68.0 ([bd538bf](https://github.com/cdeutsch/classy-forms/commit/bd538bf434210aa3cef73894c83e8bab6fb3f5cc))
+* **deps:** resolve transitive vulnerabilities (browserslist, @humanfs/node, brace-expansion, js-yaml, tar, undici, ip-address) ([6703d2f](https://github.com/cdeutsch/classy-forms/commit/6703d2f122b53e3424aff2f2431645a8fb41a1ce))
+
 ## [3.2.14](https://github.com/cdeutsch/classy-forms/compare/v3.2.13...v3.2.14) (2026-09-03)
 
 
