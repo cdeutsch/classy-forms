@@ -1,3 +1,10 @@
+## [3.2.13](https://github.com/cdeutsch/classy-forms/compare/v3.2.12...v3.2.13) (2026-09-03)
+
+
+### Bug Fixes
+
+* **deps:** bump brace-expansion from 1.1.13 to 1.1.18 in /demo ([1988362](https://github.com/cdeutsch/classy-forms/commit/1988362aec462816eaf2b5a47d607128e5f0e50c))
+
 ## [3.2.12](https://github.com/cdeutsch/classy-forms/compare/v3.2.11...v3.2.12) (2026-09-03)
 
 
