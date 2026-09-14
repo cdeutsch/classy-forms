@@ -1,3 +1,10 @@
+## [3.2.16](https://github.com/cdeutsch/classy-forms/compare/v3.2.15...v3.2.16) (2026-09-14)
+
+
+### Bug Fixes
+
+* **deps:** bump morgan from 1.11.0 to 1.12.0 in /demo ([a81b80b](https://github.com/cdeutsch/classy-forms/commit/a81b80b1907dc4331a3e64a799350c1dc488c666))
+
 ## [3.2.15](https://github.com/cdeutsch/classy-forms/compare/v3.2.14...v3.2.15) (2026-09-03)
 
 
